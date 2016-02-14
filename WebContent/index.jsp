@@ -33,7 +33,7 @@
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-<link href="css/style.css" rel="stylesheet" type="text/css">
+<link href="CSS/indexstyle.css" rel="stylesheet" type="text/css">
 <script src="scripts/grayscale.js"></script>
 <script src="scripts/scripts.js"></script>
 <meta charset="utf-8">
@@ -44,11 +44,11 @@
 
 <title>Campus Connect</title>
 
-<!-- Bootstrap Core css -->
+<!-- Bootstrap Core CSS -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Custom css -->
-<link href="css/style.css" rel="stylesheet" type="text/css">
+<!-- Custom CSS -->
+<link href="CSS/indexstyle.css" rel="stylesheet" type="text/css">
 
 <!-- Custom Fonts -->
 <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet"
@@ -66,38 +66,7 @@
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
 	<!-- Navigation -->
-	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-main-collapse">
-					<i class="fa fa-bars"></i>
-				</button>
-				<a class="navbar-brand page-scroll" href="#page-top"> <i
-					class="fa fa-play-circle"></i> <span class="light">Campus</span>
-					Connect
-				</a>
-			</div>
-
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div
-				class="collapse navbar-collapse navbar-right navbar-main-collapse">
-				<ul class="nav navbar-nav">
-					<!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-					<li class="hidden"><a href="#page-top"></a></li>
-					<li><a class="page-scroll" href="#about">About</a></li>
-					<li><a class="page-scroll" href="#login">Login</a></li>
-					<li><a class="page-scroll" href="#register">Register</a></li>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container -->
-	</nav>
-
-
-
-
+	<jsp:include page="include/navbar.html" />
 
 	<!-- Intro Header -->
 	<header class="intro">
@@ -107,7 +76,7 @@
 					<div class="col-md-8 col-md-offset-2">
 
 						<h1 class="brand-heading">Campus Connect</h1>
-						<img src="css/images/MinervaTransp.png">
+						<img src="CSS/images/MinervaTransp.png">
 						<p class="intro-text">Get your campus life connected!.</p>
 						<a href="#about" class="btn  page-scroll"> Know more! </a>
 					</div>
@@ -123,9 +92,8 @@
 				<h2>About Campus Connect</h2>
 				<p>
 					Campus Connect (abbrv. C'C) is a Social Network built around the
-					campus life limited to each University/College/School<br>
-					Whole new features like <strong>Room mate finder and
-						Student Market!</strong>
+					campus life limited to your University<br> Whole new features
+					like <strong>Room mate finder and Student Market!</strong>
 				</p>
 			</div>
 		</div>
@@ -146,7 +114,7 @@
 				<div class="col-lg-8 col-lg-offset-2">
 					<h2>Login to C'C</h2>
 					<p>You can login here....</p>
-					<a href="register.html" class="btn btn-default btn-lg">LOGIN</a>
+					<a href="login.jsp" class="btn btn-default btn-lg">LOGIN</a>
 				</div>
 			</div>
 		</div>
@@ -170,8 +138,10 @@
 				</p>
 
 				<ul class="list-inline banner-social-buttons">
-					<li><a href="register.html" class="btn btn-default btn-lg">Register
-							Now!</a></li>
+					<li><a href="fregister.jsp" class="btn btn-default btn-lg">Faculty
+							- Register Now!</a></li>
+					<li><a href="sregister.jsp" class="btn btn-default btn-lg">Student
+							Register Now!</a></li>
 
 				</ul>
 			</div>
