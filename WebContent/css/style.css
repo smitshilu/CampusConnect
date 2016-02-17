@@ -479,6 +479,9 @@ img::-moz-selection {
     font-weight: 400;
 }
 
+.icon-bar {
+    background-color: white;
+}
 
 
 

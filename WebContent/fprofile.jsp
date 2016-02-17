@@ -61,6 +61,9 @@
 <title>My Profile</title>
 <meta name="description" content="">
 
+
+
+
 <link rel="stylesheet" href="CSS/indexstyle.css">
 <!-- Font Awesome -->
 
@@ -69,6 +72,12 @@
 <body>
 	<header class="header"> </header>
 	<!--/.header-->
+
+
+
+
+
+
 
 	<!-- Navigation -->
 	<jsp:include page="include/fnavbar.html" />
@@ -79,22 +88,19 @@
 
 	<div id="#top"></div>
 
-
 	<section id="aboutUs">
 		<div class="container">
 			<div class="row">
 				<!-- item -->
 				<div class="col-md-4 tileBox">
-					<img src="CSS/images/photo-1.jpg"><br>
-					<br>
-					<br>
+					<img src="CSS/images/photo-1.jpg"><br> <br> <br>
 					<input type="file" name="file"><br> <input
 						type="submit" value="Upload">
 				</div>
 				<div class="col-md-8 tileBox">
 					<div class="txtHead">
 						<h2>
-							Hello, I am <span name="fn">Sam</span><span name="ln">
+							Hello, I am <span name="ffn">Sam</span><span name="fln">
 								Doe...</span>
 						</h2>
 
@@ -102,23 +108,26 @@
 					</div>
 
 
-					<p name="email">
+					<p name="femail">
 						<b>Email:</b> abcd@abc.com
 					</p>
-					<p name="dob">
+					<p name="fdob">
 						<b>Date of Birth:</b> abcd@abc.com
 					</p>
-					<p name="sex">
+					<p name="fsex">
 						<b>Gender:</b> abcd@abc.com
 					</p>
-					<p name="major">
-						<b>Major:</b> abcd@abc.com
+					<p name="department">
+						<b>Department:</b> abcd@abc.com
 					</p>
-					<p name="classof">
-						<b>Class of:</b> abcd@abc.com
+					<p name="frarea">
+						<b>Research Areas:</b> abcd@abc.com
 					</p>
-					<p name="interests">
-						<b>My Interests:</b> abcd@abc.com
+					<p name="fofficehours">
+						<b>Office Hours:</b> abcd@abc.com
+					</p>
+					<p name="flocation">
+						<b>Location:</b> abcd@abc.com
 					</p>
 
 				</div>
@@ -134,6 +143,7 @@
 				<!-- Heading -->
 
 			</div>
+
 
 			<!-- Footer -->
 			<jsp:include page="include/footer.html" />

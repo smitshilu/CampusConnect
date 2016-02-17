@@ -3,10 +3,8 @@
 
 <head>
 <meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="">
-<meta name="author" content="">
 <title>Campus Connect</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
@@ -37,8 +35,7 @@
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-<link href="CSS/style.css" rel="stylesheet">
-<script src="scripts/grayscale.js"></script>
+
 <script src="scripts/scripts.js"></script>
 
 <link href="CSS/style.css" rel="stylesheet" type="text/css">
@@ -55,44 +52,9 @@
 
 <body class="feeding">
 
-	<!-- Wrapper required for sidebar transitions -->
-
-
-	<!-- Fixed navbar -->
 
 	<!-- Navigation -->
-	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-main-collapse">
-					<i class="fa fa-bars"></i>
-				</button>
-				<a class="navbar-brand page-scroll" href="#page-top"> <span
-					class="light">Campus</span> Connect
-				</a>
-			</div>
-
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div
-				class="collapse navbar-collapse navbar-right navbar-main-collapse">
-				<ul class="nav navbar-nav">
-					<!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-					<li class="hidden"><a href="#page-top"></a></li>
-					<li><a class="page-scroll" href="#about">About</a></li>
-
-				</ul>
-				<form class="navbar-form navbar-right" role="search">
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="Search">
-					</div>
-					<button type="submit" class="btn btn-default">Search</button>
-				</form>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-		<!-- /.container -->
-	</nav>
+	<jsp:include page="include/fnavbar.html" />
 
 
 
@@ -108,14 +70,11 @@
 	<div class="container">
 
 		<ul class="nav nav-tabs">
-			<li class="active"><a data-toggle="tab" href="#home"
-				class="tabbold">News Feed</a></li>
-			<li><a data-toggle="tab" href="#menu1" class="tabbold">Roommate
+			<li><a href=newsfeed.jsp class="tabbold">News Feed</a></li>
+			<li class="active"><a href=roommate.jsp class="tabbold">Roommate
 					Finder</a></li>
-			<li><a data-toggle="tab" href="#menu2" class="tabbold">Student
-					Market</a></li>
-			<li><a data-toggle="tab" href="#menu3" class="tabbold">Menu
-					3</a></li>
+			<li><a href="#menu2" class="tabbold">Student Market</a></li>
+
 		</ul>
 
 		<div class="tab-content">
@@ -130,12 +89,6 @@
 
 
 				<!--NEWSFEEDS-->
-				<p>Looking for:</p>
-				<label class="radio-inline"><input type="radio"
-					name="optradio">Roommate</label> <label class="radio-inline"><input
-					type="radio" name="optradio">House</label>
-
-
 
 
 				<!-- this is the wrapper for the content -->
@@ -168,19 +121,29 @@
 												<div class="media-body-wrapper">
 													<div class="row">
 														<div class="col-md-10 col-lg-8">
-															<div class="panel panel-default share clearfix-xs">
-																<div class="panel-heading panel-heading-gray title">
-																	What&acute;s new</div>
+															<div class="panel panel-default">
+																<div class="panel-heading panel-heading-gray ">
+																	Please fill out the form below:</div>
 																<div class="panel-body">
-																	<textarea name="status" class="form-control share-text"
-																		rows="3" placeholder="Share your status..."></textarea>
+																	<label class="radio-inline"> <input
+																		onclick="document.getElementById('amt').disabled = true;"
+																		type="radio" name="optradio" value="Roommate">Roommate
+																	</label> <label class="radio-inline"><input
+																		type="radio" name="optradio" value="House">House</label>
+																	<br> <br>
+																	<textarea name="desc" id="description"
+																		class="form-control" rows="3"
+																		placeholder="Description..."></textarea>
+																	<br> <label for="address">Address:</label> <input
+																		type="text" class="form-control" id="add"
+																		name="address" /> <br> <label for="address">Amount/Rent:</label>
+																	<input type="text" class="form-control" id="amt"
+																		name="rent" />
 																</div>
 																<div class="panel-footer share-buttons">
-																	<a href="#"><i class="fa fa-map-marker"></i></a> <a
-																		href="#"><i class="fa fa-photo"></i></a> <a href="#"><i
-																		class="fa fa-video-camera"></i></a>
 																	<button type="submit"
-																		class="btn btn-primary btn-xs pull-right " href="#">Post</button>
+																		class="btn btn-primary btn-xs pull-right "
+																		onclick="displayOutput()">Post</button>
 																</div>
 															</div>
 														</div>
@@ -196,7 +159,7 @@
 
 
 										<!-- Post Starts-->
-
+										<div id="newDivs"></div>
 										<li class="media media-clearfix-xs">
 											<div class="media-left">
 												<div class="user-wrapper">
@@ -204,9 +167,9 @@
 														class="img-circle" width="80" />
 
 													<div>
-														<a href="#">Akash A..</a>
+														<a href="#">Smit S.</a>
 													</div>
-													<div class="date">11 FEB</div>
+													<div class="date">19 FEB</div>
 												</div>
 											</div>
 											<div class="media-body">
@@ -214,68 +177,15 @@
 													<div class="panel panel-default">
 
 														<div class="panel-body">
-															<p>Its Snowing!!</p>
-															<div class="timeline-added-images">
-																<img src="CSS/images/snow.jpg" width="80" alt="photo" />
-																<img src="CSS/images/UAlbanysnow.jpg" width="80"
-																	alt="photo" />
+															<p id="o">Its Snowing!!</p>
 
-															</div>
+															<div id="a"></div>
+															<div id="d"></div>
+															<div id="r"></div>
 														</div>
 														<!-- All Comments-->
 														<ul class="comments">
 
-															<!-- Comment Start-->
-															<li class="media">
-
-																<div class="media-body">
-																	<div class="pull-right dropdown" data-show-hover="li">
-																		<a href="#" data-toggle="dropdown"
-																			class="toggle-button"> <i class="fa fa-pencil"></i>
-																		</a>
-
-																	</div>
-																	<a href="" class="comment-author pull-left">Bill D.</a>
-																	<span>Yes its snowing, I know!</span>
-																	<div class="comment-date">18 Feb</div>
-																</div>
-															</li>
-
-															<!-- Comment End-->
-
-															<!-- Comment Start-->
-															<li class="media">
-
-																<div class="media-body">
-																	<div class="pull-right dropdown" data-show-hover="li">
-																		<a href="#" data-toggle="dropdown"
-																			class="toggle-button"> <i class="fa fa-pencil"></i>
-																		</a>
-
-																	</div>
-																	<a href="" class="comment-author pull-left">Bill D.</a>
-																	<span>Yes its snowing, I know!</span>
-																	<div class="comment-date">18 Feb</div>
-																</div>
-															</li>
-															<!-- Comment End-->
-
-															<!-- Comment Start-->
-															<li class="media">
-
-																<div class="media-body">
-																	<div class="pull-right dropdown" data-show-hover="li">
-																		<a href="#" data-toggle="dropdown"
-																			class="toggle-button"> <i class="fa fa-pencil"></i>
-																		</a>
-
-																	</div>
-																	<a href="" class="comment-author pull-left">Bill D.</a>
-																	<span>Yes its snowing, I know!</span>
-																	<div class="comment-date">18 Feb</div>
-																</div>
-															</li>
-															<!-- Comment End-->
 
 															<!-- New Comment-->
 															<li class="comment-form">
@@ -283,7 +193,7 @@
 
 																	<input type="text" class="form-control" /> <span
 																		class="input-group-btn"> <a href=""
-																		class="btn btn-default">Comment</a>
+																		class="btn btn-primary">Comment</a>
 																	</span>
 
 																</div>
@@ -335,7 +245,7 @@
 
 																	<input type="text" class="form-control" /> <span
 																		class="input-group-btn"> <a href=""
-																		class="btn btn-default">Comment</a>
+																		class="btn btn-primary">Comment</a>
 																	</span>
 
 																</div>
@@ -390,7 +300,7 @@
 
 																	<input type="text" class="form-control" /> <span
 																		class="input-group-btn"> <a href=""
-																		class="btn btn-default">Comment</a>
+																		class="btn btn-primary">Comment</a>
 																	</span>
 
 																</div>
@@ -457,7 +367,7 @@
 
 																	<input type="text" class="form-control" /> <span
 																		class="input-group-btn"> <a href=""
-																		class="btn btn-default">Comment</a>
+																		class="btn btn-primary">Comment</a>
 																	</span>
 
 																</div>
@@ -480,41 +390,41 @@
 					</div>
 				</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 				<!--CLOSING OF TABS-->
 			</div>
 		</div>
 
-
-
-
-
-
-
-
 		<!-- Footer -->
-		<footer>
-			<div class="container text-center">
-				<p style="color: white;">Copyright &copy; Campus Connect 2016</p>
-			</div>
-		</footer>
+		<jsp:include page="include/footer.html" />
+
+		<script type="text/javascript">
+			function displayOutput() {
+				var desc = document.getElementById("description").value;
+				var add = document.getElementById("add").value;
+				var amt = document.getElementById("amt").value;
+				var radios = document.getElementsByName("optradio");
+				for (var i = 0, length = radios.length; i < length; i++) {
+					if (radios[i].checked) {
+
+						var opt = radios[i].value;
+
+						break;
+					}
+				}
+
+				if (opt.length == 0) {
+					alert("Please enter a valid input");
+					return;
+				}
+				document.getElementById("o").innerHTML = "Looking for a " + opt;
+				document.getElementById("a").innerHTML = "Address: " + add;
+				document.getElementById("d").innerHTML = "Description: " + desc;
+				if (amt.length == 0) {
+				} else {
+					document.getElementById("r").innerHTML = "Rent: " + amt;
+				}
+			}
+		</script>
 </body>
 
 </html>

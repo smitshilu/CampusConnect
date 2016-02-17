@@ -61,9 +61,7 @@
 	<!-- Fixed navbar -->
 
 	<!-- Navigation -->
-	<jsp:include page="include/navbarfinal.html" />
-
-
+	<jsp:include page="include/fnavbar.html" />
 
 	<br>
 	<br>
@@ -71,11 +69,15 @@
 
 	<!--tabs-->
 
-
-
-
 	<div class="container">
-		<jsp:include page="include/subnavbarfinal.html" />
+
+		<ul class="nav nav-tabs">
+			<li class="active"><a href=newsfeed.jsp class="tabbold">News
+					Feed</a></li>
+			<li><a href=roommate.jsp class="tabbold">Roommate Finder</a></li>
+			<li><a href="#menu2" class="tabbold">Student Market</a></li>
+
+		</ul>
 
 		<div class="tab-content">
 			<div id="home" class="tab-pane fade in active">
@@ -118,11 +120,8 @@
 																<div class="panel-heading panel-heading-gray title">
 																	What&acute;s new</div>
 																<div class="panel-body">
-																	<center>
-																		<textarea name="status"
-																			class="form-control share-text" rows="3"
-																			placeholder="Share your status..."></textarea>
-																	</center>
+																	<textarea name="status" class="form-control share-text"
+																		rows="3" placeholder="Share your status..."></textarea>
 																</div>
 																<div class="panel-footer share-buttons">
 																	<a href="#"><i class="fa fa-map-marker"></i></a> <a
@@ -164,12 +163,7 @@
 
 														<div class="panel-body">
 															<p>Its Snowing!!</p>
-															<div class="timeline-added-images">
-																<img src="CSS/images/snow.jpg" width="80" alt="photo" />
-																<img src="CSS/images/UAlbanysnow.jpg" width="80"
-																	alt="photo" />
 
-															</div>
 														</div>
 														<!-- All Comments-->
 														<ul class="comments">
@@ -232,7 +226,7 @@
 
 																	<input type="text" class="form-control" /> <span
 																		class="input-group-btn"> <a href=""
-																		class="btn btn-default">Comment</a>
+																		class="btn btn-primary">Comment</a>
 																	</span>
 
 																</div>
@@ -284,7 +278,7 @@
 
 																	<input type="text" class="form-control" /> <span
 																		class="input-group-btn"> <a href=""
-																		class="btn btn-default">Comment</a>
+																		class="btn btn-primary">Comment</a>
 																	</span>
 
 																</div>
@@ -339,7 +333,7 @@
 
 																	<input type="text" class="form-control" /> <span
 																		class="input-group-btn"> <a href=""
-																		class="btn btn-default">Comment</a>
+																		class="btn btn-primary">Comment</a>
 																	</span>
 
 																</div>
@@ -406,7 +400,7 @@
 
 																	<input type="text" class="form-control" /> <span
 																		class="input-group-btn"> <a href=""
-																		class="btn btn-default">Comment</a>
+																		class="btn btn-primary">Comment</a>
 																	</span>
 
 																</div>
@@ -434,11 +428,7 @@
 		</div>
 
 		<!-- Footer -->
-		<footer>
-			<div class="container text-center">
-				<p style="color: white;">Copyright &copy; Campus Connect 2016</p>
-			</div>
-		</footer>
+		<jsp:include page="include/footer.html" />
 </body>
 
 </html>
