@@ -58,7 +58,7 @@
 			</div>
 		</div>
 		<div class="form-bottom">
-			<form role="form" action="" method="post"
+			<form role="form" action="SRegistration" method="post"
 				class="registration-form center_div">
 				<div class="form-group">
 					<label style="color: white" class="" for="fname">First name</label>
@@ -78,14 +78,14 @@
 
 				<div class="form-group">
 					<label style="color: white" class="" for="dob">Date of
-						Birth</label> <input type="text" name="dob" placeholder="mm-dd-yyyy"
+						Birth</label> <input type="date" name="dob" placeholder="mm-dd-yyyy"
 						class="form-email form-control" id="form-email" required>
 				</div>
 				<div class="form-group">
 					<label style="color: white" class="" for="sex">Gender</label> <br>
 					<label style="color: white" class="radio-inline"><input
-						type="radio" name="sex">Male</label> <label style="color: white"
-						class="radio-inline"><input type="radio" name="sex">Female</label>
+						type="radio" name="sex" value="male">Male</label> <label style="color: white"
+						class="radio-inline"><input type="radio" name="sex" value="female">Female</label>
 
 				</div>
 				<div class="form-group">
@@ -97,10 +97,10 @@
 				<div class="form-group">
 					<label style="color: white" class="" for="major">Major</label> <select
 						class="form-control" name="major">
-						<option value="volvo">Computer Science</option>
-						<option value="saab">Performing Arts</option>
-						<option value="opel">Physics</option>
-						<option value="audi">Biology</option>
+						<option value="Computer Science">Computer Science</option>
+						<option value="Performing Arts">Performing Arts</option>
+						<option value="Physics">Physics</option>
+						<option value="Biology">Biology</option>
 					</select>
 
 				</div>

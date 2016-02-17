@@ -97,7 +97,7 @@
 					<h2>Login to C'C</h2>
 					<div class="form-bottom">
 
-						<form role="form" action="" method="post"
+						<form role="form" action="LoginAuth" method="post"
 							class="registration-form center_div">
 							<table class="registration-form center_div">
 								<div class="form-group">
@@ -106,7 +106,7 @@
 										<td></td>
 										</td>
 										<td><input
-						type="text" name="lemail" placeholder="Email"
+						type="text" name="Email" placeholder="Email"
 						class="form-first-name form-control" id="form-first-name" required></td>
 									</tr>
 								</div>
@@ -115,12 +115,12 @@
 								</tr>
 								<div class="form-group">
 									<tr>
-										<td><label style="color: white" class="" for="lpwd">Password</label>
+										<td><label style="color: white" class="" for="Password">Password</label>
 										<td></td>
 
 
 										<td><input
-						type="password" name="lpwd" placeholder="Password"
+						type="password" name="Password" placeholder="Password"
 						class="form-last-name form-control" id="form-last-name" required></td>
 									</tr>
 								</div>
