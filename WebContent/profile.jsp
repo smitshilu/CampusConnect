@@ -3,22 +3,10 @@
 <%@ page import="java.io.*"%>
 
 <%
-	if (session.getAttribute("email") == null)
+	if ((session.getAttribute("email")) == null)
 		response.sendRedirect("index.jsp");
-	String email = (String) session.getAttribute("email");
-	ArrayList<StudentProfile> studentprofilearray = (ArrayList<StudentProfile>) session
-			.getAttribute("profile");
-	String type = (String) session.getAttribute("type");
-	String fname = studentprofilearray.get(0).getFname();
-	String lname = studentprofilearray.get(0).getLname();
-	String dob = studentprofilearray.get(0).getDob();
-	String sex = studentprofilearray.get(0).getSex();
-	String major = studentprofilearray.get(0).getMajor();
-	String classof = studentprofilearray.get(0).getClassof();
-	String stuinterest = studentprofilearray.get(0).getStuinterest();
-	PrintWriter pwout = response.getWriter();
-	response.setContentType("text/html");
 %>
+
 <html lang="en-gb" class="no-js">
 <head>
 
@@ -60,6 +48,11 @@
 <link href="CSS/style.css" rel="stylesheet">
 <script src="scripts/grayscale.js"></script>
 <script src="scripts/scripts.js"></script>
+<script>
+	document.getElementById("uploadBtn").onchange = function() {
+		document.getElementById("uploadFile").value = this.value;
+	};
+</script>
 
 <link href="CSS/style.css" rel="stylesheet" type="text/css">
 
@@ -84,6 +77,22 @@
 
 </head>
 <%
+	String email = (String) session.getAttribute("email");
+	ArrayList<StudentProfile> studentprofilearray = (ArrayList<StudentProfile>) session
+	.getAttribute("profile");
+	String type = (String) session.getAttribute("type");
+	String fname = studentprofilearray.get(0).getFname();
+	String lname = studentprofilearray.get(0).getLname();
+	String dob = studentprofilearray.get(0).getDob();
+	String sex = studentprofilearray.get(0).getSex();
+	String major = studentprofilearray.get(0).getMajor();
+	String classof = studentprofilearray.get(0).getClassof();
+	String stuinterest = studentprofilearray.get(0).getStuinterest();
+	PrintWriter pwout = response.getWriter();
+	response.setContentType("text/html");
+%>
+
+<%
 	pwout.write("<body>");
 	pwout.write("<header class='header'> </header>");
 %>
@@ -96,9 +105,10 @@
 	pwout.write("<div class='row'>");
 	pwout.write("<div class='col-md-4 tileBox'>");
 	pwout.write("<img src='CSS/images/photo-1.jpg'><br> <br> <br>");
-	pwout.write("<input type='file' name='file'><br>");
-
-	pwout.write("<input type='submit' value='Upload'>");
+	pwout.write("<form action='PhotoUpload' method='post'>");
+	pwout.write("<input id='uploadFile' class='form-control' placeholder='Choose File' disabled='disabled' style='width: 70%'/><div class='fileUpload btn btn-primary'><span>Choose</span><input id='uploadBtn' type='file' class='upload' /></div>");
+	pwout.write("<div class='fileUpload btn btn-primary'><span>Upload</span><input id='uploadBtn' type='submit' class='upload' /></div>");
+	pwout.write("</form><br>");
 	pwout.write("</div>");
 	pwout.write("<div class='col-md-8 tileBox'>");
 	pwout.write("<div class='txtHead'>");

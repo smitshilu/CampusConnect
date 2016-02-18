@@ -101,9 +101,8 @@
 					<h2>Login to C'C</h2>
 					<div class="form-bottom">
 						<jsp:include page="include/login.html" />
-
-						<p style="color: red">${login_error}</p>
 					</div>
+					<p style="color: red">${login_error}</p>
 				</div>
 			</div>
 		</div>

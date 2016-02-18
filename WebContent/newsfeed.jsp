@@ -1,3 +1,5 @@
+<%@ page import="session.*"%>
+
 <!DOCTYPE html>
 <html lang="en">
 

@@ -91,8 +91,8 @@ public class AuthDAO {
 
 			int random_number = (int) Math.round(Math.random() * 999999);
 
-			String sql1 = "INSERT INTO emailveri VALUES ('" + email + "', "
-					+ random_number + ")";
+			String sql1 = "INSERT INTO login VALUES ('" + email + "', "
+					+ random_number + ", '1')";
 
 			System.out.println(sql + " " + sql1);
 			if (s.executeUpdate(sql) == 1) {

@@ -56,7 +56,7 @@ public class SRegistration extends HttpServlet {
 		if (!ad.checkEmailAvailble(email)) {
 			if (ad.insertStudentRecord(fname, lname, dob, sex, pwd, classof,
 					stuinterest, email, major)) {
-				response.sendRedirect("profile.jsp");
+				response.sendRedirect("newsfeed.jsp");
 			}
 		} else {
 			request.setAttribute("error_email", "Email is already registered");
