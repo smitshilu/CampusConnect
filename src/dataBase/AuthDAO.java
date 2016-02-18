@@ -89,10 +89,10 @@ public class AuthDAO {
 					+ "', '" + sex + "', '" + major + "'," + classof + ", '"
 					+ stuinterest + "')";
 
-			int random_number = (int) Math.round(Math.random() * 999999);
+			// int random_number = (int) Math.round(Math.random() * 999999);
 
-			String sql1 = "INSERT INTO login VALUES ('" + email + "', "
-					+ random_number + ", '1')";
+			String sql1 = "INSERT INTO login VALUES ('" + email + "', '" + pwd
+					+ "', '1')";
 
 			System.out.println(sql + " " + sql1);
 			if (s.executeUpdate(sql) == 1) {
