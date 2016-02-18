@@ -53,9 +53,15 @@ public class SRegistration extends HttpServlet {
 				+ " ++ " + email + " ++ " + major);
 
 		AuthDAO ad = new AuthDAO();
-		if (ad.insertStudentRecord(fname, lname, dob, sex, pwd, classof,
-				stuinterest, email, major)) {
-			response.sendRedirect("profile.jsp");
+		if (!ad.checkEmailAvailble(email)) {
+			if (ad.insertStudentRecord(fname, lname, dob, sex, pwd, classof,
+					stuinterest, email, major)) {
+				response.sendRedirect("profile.jsp");
+			}
+		} else {
+			request.setAttribute("error_email", "Email is already registered");
+			getServletContext().getRequestDispatcher("/sregister.jsp")
+					.forward(request, response);
 		}
 	}
 

@@ -46,11 +46,14 @@ public class LoginAuth extends HttpServlet {
 		if (ad.LoginAuth(email, password)) {
 			HttpSession session = request.getSession();
 			session.setAttribute("email", email);
-			session.setAttribute("type", ad.getType("email"));
+			session.setAttribute("type", ad.getType("Type"));
+			session.setAttribute("profile", ad.getStudentProfile(email));
 			response.sendRedirect("newsfeed.jsp");
 		}
 		else {
-			System.out.println("Hello");
+			request.setAttribute("login_error", "Username and Password not correct");
+			getServletContext().getRequestDispatcher("/login.jsp")
+					.forward(request, response);
 		}
 		
 		

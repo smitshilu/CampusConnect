@@ -1,4 +1,4 @@
-
+<html>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
 	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
@@ -28,7 +28,32 @@
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-<link href="CSS/style.css" rel="stylesheet" type="text/css">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Login</title>
+
+
+
+<!-- Custom CSS -->
+
+<link href="CSS/indexstyle.css" rel="stylesheet" type="text/css">
+
+<script src="scripts/scripts.js"></script>
+<script type="text/javascript" src="scripts/jquery.easing.1.3.min.js"></script>
+<link href="CSS/indexstyle.css" rel="stylesheet" type="text/css">
+
+<!-- Custom Fonts -->
+<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet"
+	type="text/css">
+<link
+	href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
+	rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700"
+	rel="stylesheet" type="text/css">
 
 <body>
 
@@ -69,46 +94,21 @@
 	</nav>
 	<!-- NAV BAR-->
 
-	<br>
-	<br>
-	<br>
-	<div class="col-sm-5 form-box ">
-		<div class="form-top center_div">
-			<div class="form-top-left">
-				<h3 style="color: white">Login !!</h3>
-				<p style="color: white">Fill in the form below to login:</p>
-			</div>
-			<div class="form-top-right">
-				<i class="fa fa-pencil"></i>
+	<section id="login" class="content-section text-center">
+		<div class="row">
+			<div class="container">
+				<div class="col-lg-8 col-lg-offset-2">
+					<h2>Login to C'C</h2>
+					<div class="form-bottom">
+						<jsp:include page="include/login.html" />
+
+						<p style="color: red">${login_error}</p>
+					</div>
+				</div>
 			</div>
 		</div>
-		<div class="form-bottom">
-			<form role="form" action="" method="post"
-				class="registration-form center_div">
-				<div class="form-group">
-					<label style="color: white" class="" for="lemail">Email</label> <input
-						type="text" name="lemail" placeholder="Email"
-						class="form-first-name form-control" id="form-first-name" required>
-				</div>
-				<div class="form-group">
-					<label style="color: white" class="" for="lpwd">Password</label> <input
-						type="password" name="lpwd" placeholder="Password"
-						class="form-last-name form-control" id="form-last-name" required>
-				</div>
-
-				<a type="submit" class="btn btn-lg btn-default" href="">Login</a>
-			</form>
-		</div>
-	</div>
-
-
-
-
-
-
-
-	<div class="spacing"></div>
-
-	<p>Footer</p>
+	</section>
+	<jsp:include page="include/footer.html" />
 
 </body>
+</html>

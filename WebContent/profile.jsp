@@ -1,7 +1,25 @@
-<!doctype html>
+<%@ page import="model.StudentProfile"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.io.*"%>
 
+<%
+	if (session.getAttribute("email") == null)
+		response.sendRedirect("index.jsp");
+	String email = (String) session.getAttribute("email");
+	ArrayList<StudentProfile> studentprofilearray = (ArrayList<StudentProfile>) session
+			.getAttribute("profile");
+	String type = (String) session.getAttribute("type");
+	String fname = studentprofilearray.get(0).getFname();
+	String lname = studentprofilearray.get(0).getLname();
+	String dob = studentprofilearray.get(0).getDob();
+	String sex = studentprofilearray.get(0).getSex();
+	String major = studentprofilearray.get(0).getMajor();
+	String classof = studentprofilearray.get(0).getClassof();
+	String stuinterest = studentprofilearray.get(0).getStuinterest();
+	PrintWriter pwout = response.getWriter();
+	response.setContentType("text/html");
+%>
 <html lang="en-gb" class="no-js">
-
 <head>
 
 <meta charset="utf-8">
@@ -65,77 +83,51 @@
 <!-- Font Awesome -->
 
 </head>
+<%
+	pwout.write("<body>");
+	pwout.write("<header class='header'> </header>");
+%>
+<jsp:include page='include/fnavbar.html' />
+<%
+	pwout.write("<br><br><br>");
+	pwout.write("<div id='#top'></div>");
+	pwout.write("<section id='aboutUs'>");
+	pwout.write("<div class='container'>");
+	pwout.write("<div class='row'>");
+	pwout.write("<div class='col-md-4 tileBox'>");
+	pwout.write("<img src='CSS/images/photo-1.jpg'><br> <br> <br>");
+	pwout.write("<input type='file' name='file'><br>");
 
-<body>
-	<header class="header"> </header>
-	<!--/.header-->
+	pwout.write("<input type='submit' value='Upload'>");
+	pwout.write("</div>");
+	pwout.write("<div class='col-md-8 tileBox'>");
+	pwout.write("<div class='txtHead'>");
+	pwout.write("<h2>Hello, I am <span name='fn'>" + fname
+			+ "&nbsp;</span>");
 
-	<!-- Navigation -->
-	<jsp:include page="include/fnavbar.html" />
-
-	<br>
-	<br>
-	<br>
-
-	<div id="#top"></div>
-
-
-	<section id="aboutUs">
-		<div class="container">
-			<div class="row">
-				<!-- item -->
-				<div class="col-md-4 tileBox">
-					<img src="CSS/images/photo-1.jpg"><br>
-					<br>
-					<br>
-					<input type="file" name="file"><br> <input
-						type="submit" value="Upload">
-				</div>
-				<div class="col-md-8 tileBox">
-					<div class="txtHead">
-						<h2>
-							Hello, I am <span name="fn">Sam</span><span name="ln">
-								Doe...</span>
-						</h2>
-
-
-					</div>
-
-
-					<p name="email">
-						<b>Email:</b> abcd@abc.com
-					</p>
-					<p name="dob">
-						<b>Date of Birth:</b> abcd@abc.com
-					</p>
-					<p name="sex">
-						<b>Gender:</b> abcd@abc.com
-					</p>
-					<p name="major">
-						<b>Major:</b> abcd@abc.com
-					</p>
-					<p name="classof">
-						<b>Class of:</b> abcd@abc.com
-					</p>
-					<p name="interests">
-						<b>My Interests:</b> abcd@abc.com
-					</p>
-
-				</div>
-				<!-- end: -->
-			</div>
-		</div>
-	</section>
-
-	<!--Skills-->
-	<section id="skills" class="secPad white">
-		<div class="container">
-			<div class="heading ">
-				<!-- Heading -->
-
-			</div>
-
-			<!-- Footer -->
-			<jsp:include page="include/footer.html" />
-</body>
-</html>
+	pwout.write("<span name='ln'>" + lname + "</span>");
+	pwout.write("</h2>");
+	pwout.write("</div>");
+	pwout.write("<p name='email'><b>Email:</b>&nbsp;" + email + "</p>");
+	pwout.write("<p name='dob'>	<b>Date of Birth:</b>&nbsp;" + dob
+			+ "</p>");
+	pwout.write("<p name='sex'>	<b>Gender:</b>&nbsp;" + sex + "</p>");
+	pwout.write("<p name='major'><b>Major:</b>&nbsp;" + major + "</p>");
+	pwout.write("<p name='classof'><b>Class of:</b>&nbsp;" + classof
+			+ "</p>");
+	pwout.write("<p name='interests'><b>My Interests:</b>&nbsp;"
+			+ stuinterest + "</p>");
+	pwout.write("</div>");
+	pwout.write("</div>");
+	pwout.write("</div>");
+	pwout.write("</section>");
+	pwout.write("<section id='skills' class='secPad white'>");
+	pwout.write("<div class='container'>");
+	pwout.write("<div class='heading '>");
+	pwout.write("</div>");
+%>
+<jsp:include page='include/footer.html' />
+<%
+	pwout.write("</body>");
+	pwout.write("</html>");
+%>

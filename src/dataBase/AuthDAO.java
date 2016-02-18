@@ -2,10 +2,14 @@ package dataBase;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+
+import model.StudentProfile;
 
 public class AuthDAO {
 
@@ -84,21 +88,89 @@ public class AuthDAO {
 					+ lname + "', '" + email + "', '" + format.format(date)
 					+ "', '" + sex + "', '" + major + "'," + classof + ", '"
 					+ stuinterest + "')";
-			String sql1 = "INSERT INTO login VALUES ('" + email + "', '" + pwd
-					+ "', '1')";
+
+			int random_number = (int) Math.round(Math.random() * 999999);
+
+			String sql1 = "INSERT INTO emailveri VALUES ('" + email + "', "
+					+ random_number + ")";
 
 			System.out.println(sql + " " + sql1);
-			s.executeUpdate(sql);
-			s.executeUpdate(sql1);
-			return true;
-
+			if (s.executeUpdate(sql) == 1) {
+				if (s.executeUpdate(sql1) == 1) {
+					// EmailVeri ev = new EmailVeri();
+					// ev.sendMail(email, random_number);
+					return true;
+				}
+				return false;
+			}
 			// return false;
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
-			
-		}
 
+		}
+		return false;
 	}
+
+	public boolean checkEmailAvailble(String email) {
+
+		String query = "select * from student where Email = '" + email + "'";
+
+		try {
+			ResultSet rs = s.getResultSet();
+			rs = s.executeQuery(query);
+			String getemail = null;
+			if (rs.next()) {
+				getemail = rs.getString("Email");
+			}
+
+			if (email.equals(getemail))
+				return true;
+			else
+				return false;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public ArrayList<StudentProfile> getStudentProfile(String email) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		ResultSet rs = null;
+
+		String query = "SELECT * FROM `student` where Email = '" + email + "'";
+
+		try {
+			rs = s.executeQuery(query);
+
+			ArrayList<StudentProfile> profile = new ArrayList<>();
+
+			while (rs.next()) {
+				String getemail = rs.getString("Email");
+				String getdob = rs.getString("Dob");
+				String getsex = rs.getString("Sex");
+				String getmajor = rs.getString("Major");
+				String getclassof = rs.getString("Classof");
+				String getinterest = rs.getString("Major");
+				String getfname = rs.getString("Fname");
+				String getlname = rs.getString("Lname");
+				StudentProfile studentProfile = new StudentProfile(getfname,
+						getlname, getemail, getdob, getsex, getmajor,
+						getclassof, getinterest);
+				profile.add(studentProfile);
+			}
+			return profile;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }
