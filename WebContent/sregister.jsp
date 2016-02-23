@@ -72,7 +72,7 @@
 				</div>
 				<div class="form-group">
 					<label style="color: white" class="" for="email">Email</label> <input
-						type="text" name="email" placeholder="Email..."
+						type="text" name="email" placeholder="@albany.edu"
 						class="form-email form-control" id="form-email" required> <p style="color: red">${error_email}</p> 
 				</div>
 

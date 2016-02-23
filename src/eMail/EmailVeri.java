@@ -37,7 +37,12 @@ public class EmailVeri {
 
 			message.setContent("Hello,<br>", "text/html");
 			message.setContent(
-					"Here is your link to complete your registration."+number,
+					"Here is your link to complete your registration.",
+					"text/html");
+
+			message.setContent(
+					"<a href='http://localhost:8080/CampusConnect/VerifyEMail?email="
+							+ email + "&code=" + number + "'>click here</a>",
 					"text/html");
 
 			// Send message

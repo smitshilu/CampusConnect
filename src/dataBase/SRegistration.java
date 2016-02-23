@@ -1,6 +1,9 @@
 package dataBase;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,9 +41,17 @@ public class SRegistration extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
 		String fname = request.getParameter("fname");
 		String lname = request.getParameter("lname");
-		String dob = request.getParameter("dob");
+		Date dob = null;
+		try {
+			dob = formatter.parse(request.getParameter("dob"));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String sex = request.getParameter("sex");
 		String pwd = request.getParameter("pwd");
 		String stuinterest = request.getParameter("stuinterest");
@@ -53,15 +64,26 @@ public class SRegistration extends HttpServlet {
 				+ " ++ " + email + " ++ " + major);
 
 		AuthDAO ad = new AuthDAO();
-		if (!ad.checkEmailAvailble(email)) {
-			if (ad.insertStudentRecord(fname, lname, dob, sex, pwd, classof,
-					stuinterest, email, major)) {
-				response.sendRedirect("newsfeed.jsp");
+
+		String check_email[] = email.split("@");
+
+		if ((check_email[1]).equals("albany.edu")) {
+			if (!ad.checkEmailAvailble(email)) {
+				if (ad.insertStudentRecord(fname, lname, formatter.format(dob),
+						sex, pwd, classof, stuinterest, email, major)) {
+					response.sendRedirect("newsfeed.jsp");
+				}
+			} else {
+				request.setAttribute("error_email",
+						"Email is already registered");
+				getServletContext().getRequestDispatcher("/sregister.jsp")
+						.forward(request, response);
 			}
 		} else {
-			request.setAttribute("error_email", "Email is already registered");
-			getServletContext().getRequestDispatcher("/sregister.jsp")
-					.forward(request, response);
+			request.setAttribute("error_email",
+					"Email should be in @albany.edu format");
+			getServletContext().getRequestDispatcher("/sregister.jsp").forward(
+					request, response);
 		}
 	}
 

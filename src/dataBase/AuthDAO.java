@@ -5,11 +5,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import model.StudentProfile;
+import eMail.EmailVeri;
 
 public class AuthDAO {
 
@@ -81,25 +80,26 @@ public class AuthDAO {
 
 		try {
 
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-dd-MM");
-			Date date = format.parse(dob);
-
 			String sql = "INSERT INTO student VALUES ('" + fname + "', '"
-					+ lname + "', '" + email + "', '" + format.format(date)
-					+ "', '" + sex + "', '" + major + "'," + classof + ", '"
-					+ stuinterest + "')";
+					+ lname + "', '" + email + "', '" + dob + "', '" + sex
+					+ "', '" + major + "'," + classof + ", '" + stuinterest
+					+ "')";
 
-			// int random_number = (int) Math.round(Math.random() * 999999);
+			int random_number = (int) Math.round(Math.random() * 999999);
 
 			String sql1 = "INSERT INTO login VALUES ('" + email + "', '" + pwd
-					+ "', '1')";
+					+ "', 2)";
+			String sql2 = "INSERT INTO emailveri VALUES ('" + email + "', "
+					+ random_number + ")";
 
 			System.out.println(sql + " " + sql1);
 			if (s.executeUpdate(sql) == 1) {
 				if (s.executeUpdate(sql1) == 1) {
-					// EmailVeri ev = new EmailVeri();
-					// ev.sendMail(email, random_number);
-					return true;
+					EmailVeri ev = new EmailVeri();
+					ev.sendMail(email, random_number);
+					if (s.executeUpdate(sql2) == 1) {
+						return true;
+					}
 				}
 				return false;
 			}
@@ -171,6 +171,37 @@ public class AuthDAO {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public boolean verifyMail(String email, int code) {
+		String sql = "select * from emailveri where email='" + email + "'";
+
+		try {
+
+			ResultSet rs = s.executeQuery(sql);
+			String email1 = "null";
+			int code1 = 0;
+
+			while (rs.next()) {
+				email1 = rs.getString("Email");
+				code1 = rs.getInt("Code");
+			}
+
+			if (email.equals(email1) && code == code1) {
+				String sql2 = "DELETE FROM emailveri WHERE Email = '" + email
+						+ "'";
+				String sql3 = "UPDATE login SET Type = '1' WHERE Email = '"
+						+ email + "';";
+				s.executeUpdate(sql2);
+				s.executeUpdate(sql3);
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }
