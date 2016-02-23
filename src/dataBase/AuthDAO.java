@@ -35,13 +35,15 @@ public class AuthDAO {
 			java.sql.ResultSet rs = s.executeQuery(sql);
 			String thisemail = "null";
 			String thispassword = "null";
+			int thistype = 2;
 
 			while (rs.next()) {
 				thisemail = rs.getString("Email");
 				thispassword = rs.getString("Password");
+				thistype = rs.getInt("Type");
 			}
 
-			if (thisemail.equals(email) && thispassword.equals(password)) {
+			if (thisemail.equals(email) && thispassword.equals(password) && thistype != 2) {
 				return true;
 
 			} else {
