@@ -16,5 +16,7 @@
 	<classpathentry kind="lib" path="E:/Software Engineering/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="lib" path="E:/Software Engineering/jaf-1.1.1/activation.jar"/>
 	<classpathentry kind="lib" path="E:/Software Engineering/javamail-1.4.5/mail.jar"/>
+	<classpathentry kind="lib" path="E:/Software Engineering/CampusConnect/commons-fileupload-1.3.1.jar"/>
+	<classpathentry kind="lib" path="E:/Software Engineering/CampusConnect/commons-io-2.4.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

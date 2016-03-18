@@ -79,7 +79,7 @@
 <%
 	String email = (String) session.getAttribute("email");
 	ArrayList<StudentProfile> studentprofilearray = (ArrayList<StudentProfile>) session
-	.getAttribute("profile");
+			.getAttribute("profile");
 	String type = (String) session.getAttribute("type");
 	String fname = studentprofilearray.get(0).getFname();
 	String lname = studentprofilearray.get(0).getLname();
@@ -88,6 +88,8 @@
 	String major = studentprofilearray.get(0).getMajor();
 	String classof = studentprofilearray.get(0).getClassof();
 	String stuinterest = studentprofilearray.get(0).getStuinterest();
+	String photopath = "CSS/images/"+email+".JPG";
+
 	PrintWriter pwout = response.getWriter();
 	response.setContentType("text/html");
 %>
@@ -104,9 +106,9 @@
 	pwout.write("<div class='container'>");
 	pwout.write("<div class='row'>");
 	pwout.write("<div class='col-md-4 tileBox'>");
-	pwout.write("<img src='CSS/images/photo-1.jpg'><br> <br> <br>");
-	pwout.write("<form action='PhotoUpload' method='post'>");
-	pwout.write("<input id='uploadFile' class='form-control' placeholder='Choose File' disabled='disabled' style='width: 70%'/><div class='fileUpload btn btn-primary'><span>Choose</span><input id='uploadBtn' type='file' class='upload' /></div>");
+	pwout.write("<img src='" + photopath + "'><br> <br> <br>");
+	pwout.write("<form action='PhotoUpload' method='post' enctype='multipart/form-data'>");
+	pwout.write("<input id='uploadFile' class='form-control' placeholder='Choose File' disabled='disabled' style='width: 70%'/><div class='fileUpload btn btn-primary'><span>Choose</span><input id='uploadBtn' type='file' class='upload' name='photo' /></div>");
 	pwout.write("<div class='fileUpload btn btn-primary'><span>Upload</span><input id='uploadBtn' type='submit' class='upload' /></div>");
 	pwout.write("</form><br>");
 	pwout.write("</div>");

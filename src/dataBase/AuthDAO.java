@@ -43,7 +43,8 @@ public class AuthDAO {
 				thistype = rs.getInt("Type");
 			}
 
-			if (thisemail.equals(email) && thispassword.equals(password) && thistype != 2) {
+			if (thisemail.equals(email) && thispassword.equals(password)
+					&& thistype != 2) {
 				return true;
 
 			} else {
@@ -205,5 +206,4 @@ public class AuthDAO {
 		}
 		return false;
 	}
-
 }

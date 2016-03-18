@@ -43,11 +43,13 @@ public class LoginAuth extends HttpServlet {
 		String password = request.getParameter("Password");
 
 		AuthDAO ad = new AuthDAO();
+		
 		if (ad.LoginAuth(email, password)) {
 			HttpSession session = request.getSession();
 			session.setAttribute("email", email);
 			session.setAttribute("type", ad.getType("Type"));
 			session.setAttribute("profile", ad.getStudentProfile(email));
+			session.setAttribute("photopath", "CSS/images/"+email+".JPG");
 			response.sendRedirect("newsfeed.jsp");
 		}
 		else {

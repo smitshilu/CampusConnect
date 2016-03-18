@@ -10,6 +10,7 @@ public class StudentProfile {
 	private String major;
 	private String classof;
 	private String stuinterest;
+	private String photopath;
 
 	public String getFname() {
 		return fname;
@@ -73,6 +74,14 @@ public class StudentProfile {
 
 	public void setStuinterest(String stuinterest) {
 		this.stuinterest = stuinterest;
+	}
+	
+	public String getPhotopath() {
+		return photopath;
+	}
+
+	public void setPhotopath(String photopath) {
+		this.photopath = photopath;
 	}
 
 	public StudentProfile(String fname, String lname, String email, String dob,
