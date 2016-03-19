@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.GetNewsFeed;
 import model.StudentProfile;
 import eMail.EmailVeri;
 
@@ -94,14 +95,17 @@ public class AuthDAO {
 					+ "', 2)";
 			String sql2 = "INSERT INTO emailveri VALUES ('" + email + "', "
 					+ random_number + ")";
+			String sql3 = "INSERT INTO photo VALUES ('" + email + "', 'default.jpg')";
 
 			System.out.println(sql + " " + sql1);
 			if (s.executeUpdate(sql) == 1) {
 				if (s.executeUpdate(sql1) == 1) {
-					EmailVeri ev = new EmailVeri();
-					ev.sendMail(email, random_number);
-					if (s.executeUpdate(sql2) == 1) {
-						return true;
+					if (s.executeUpdate(sql3) == 1) {
+						EmailVeri ev = new EmailVeri();
+						ev.sendMail(email, random_number);
+						if (s.executeUpdate(sql2) == 1) {
+							return true;
+						}
 					}
 				}
 				return false;
@@ -207,9 +211,40 @@ public class AuthDAO {
 		return false;
 	}
 
-	public boolean insertNewsFeed(String email, String post, int parentID) {
-		String sql = "insert into newsfeed VALUES('" + null + "','" + email
-				+ "','" + parentID + "','" + post + "','" + null + "')";
+	public ArrayList<GetNewsFeed> getAllFeeds() {
+
+		ResultSet rs = null;
+
+		String query = "SELECT * FROM `newsfeed` ORDER BY time DESC";
+
+		try {
+			Statement s = conn.createStatement();
+			rs = s.executeQuery(query);
+
+			ArrayList<GetNewsFeed> FeedList = new ArrayList<>();
+
+			while (rs.next()) {
+				String ID = rs.getString("ID");
+				String datetime = rs.getString("Time");
+				String post = rs.getString("Post");
+				String parentID = rs.getString("ParentID");
+				String email = rs.getString("Email");
+				GetNewsFeed feedcontent = new GetNewsFeed(ID, email, parentID,
+						post, datetime);
+				FeedList.add(feedcontent);
+			}
+			return FeedList;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public boolean insertNewsFeed(String id, String email, String pid,
+			String post, String datenow) {
+		String sql = "insert into newsfeed VALUES('" + id + "','" + email
+				+ "','" + pid + "','" + post + "','" + datenow + "')";
 		try {
 			if (s.executeUpdate(sql) == 1)
 				return true;
@@ -218,4 +253,33 @@ public class AuthDAO {
 		}
 		return false;
 	}
+	
+	public boolean insertPhoto(String email, String photoname) {
+		String sql = "UPDATE photo SET PhotoName = '"+photoname+"' WHERE Email = '"
+						+ email + "';";
+		try {
+			if (s.executeUpdate(sql) == 1)
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public String getPhoto(String email) {
+		String sql = "select * from photo WHERE Email = '"+ email + "';";
+		try {
+			Statement s = conn.createStatement();
+			ResultSet rs = s.executeQuery(sql);
+			
+			while(rs.next()) {
+				return rs.getString("PhotoName");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "default.jpg";
+	}
+
 }

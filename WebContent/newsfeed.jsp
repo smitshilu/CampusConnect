@@ -1,4 +1,8 @@
+<%@page import="dataBase.AuthDAO"%>
+<%@page import="model.GetNewsFeed"%>
+<%@page import="java.io.PrintWriter"%>
 <%@ page import="session.*"%>
+<%@ page import="java.util.*"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,6 +13,7 @@
 %>
 
 <head>
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,7 +62,8 @@
 	href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
 	rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700"
-	rel="stylesheet" type="text/css">
+	rel="stylesheet" type="text/css">	
+	
 </head>
 
 <body class="feeding">
@@ -76,54 +82,79 @@
 
 	<!--tabs-->
 
-	<div class="container">
+	<div class="container"></div>
 
-		<ul class="nav nav-tabs">
-			<li class="active"><a href=newsfeed.jsp class="tabbold">News
-					Feed</a></li>
-			<li><a href="Index" class="tabbold">Roommate Finder</a></li>
-			<li><a href="#menu2" class="tabbold">Student Market</a></li>
+	<ul class="nav nav-tabs">
+		<li class="active"><a href=newsfeed.jsp class="tabbold">News
+				Feed</a></li>
+		<li><a href="Index" class="tabbold">Roommate Finder</a></li>
+		<li><a href="#menu2" class="tabbold">Student Market</a></li>
 
-		</ul>
+	</ul>
 
-		<div class="tab-content">
-			<div id="home" class="tab-pane fade in active">
+	<div class="tab-content">
+		<div id="home" class="tab-pane fade in active">
 
-				<!--tabs-->
+			<!--tabs-->
 
-				<!--NEWSFEEDS-->
+			<!--NEWSFEEDS-->
 
-				<!-- this is the wrapper for the content -->
-				<div class="st-content">
+			<!-- this is the wrapper for the content -->
+			<div class="st-content">
 
-					<!-- extra div for emulating position:fixed of the menu -->
-					<div class="st-content-inner">
+				<!-- extra div for emulating position:fixed of the menu -->
+				<div class="st-content-inner">
 
-						<div class="container">
+					<div class="container">
+<%
 
+System.out.println(session.getAttribute("photo"));
 
-							<div class="row">
-								<div class="col-md-9">
-									<ul class="timeline-list">
+%>
 
+						<div class="row">
+							<div class="col-md-9">
+								<ul class="timeline-list">
+<% AuthDAO ad = new AuthDAO(); %>
+									<!-- Post Starts-->
+									<li class="media media-clearfix-xs">
+										<div class="media-left">
+											<div class="user-wrapper">
+												<img
+													src="<%= session.getAttribute("photopath") %>"
+													alt="people" class="img-circle" width="80" height="80" />
+												<div>
+													<a href="#"> <%
+ 	out.println(session.getAttribute("email"));
+ %>
+													</a>
+												</div>
 
-										<!-- Post Starts-->
-										<li class="media media-clearfix-xs">
-											<div class="media-left">
-												<div class="user-wrapper">
-													<img src="CSS/images/profilepic.png" alt="people"
-														class="img-circle" width="80" />
-													<div>
-														<a href="#">Smit S.</a>
-													</div>
-													<div class="date">19 FEB</div>
+												<%
+													Date dt = new java.util.Date();
+
+													java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+													String datenow = sdf.format(dt);
+
+													ArrayList<GetNewsFeed> newsfeed = new ArrayList<>();
+													ArrayList<GetNewsFeed> comment = new ArrayList<>();
+													newsfeed = (ArrayList<GetNewsFeed>) session
+															.getAttribute("newsfeed");
+												%>
+
+												<div class="date">
+													<%
+														out.println(datenow);
+													%>
 												</div>
 											</div>
-											<div class="media-body">
-												<div class="media-body-wrapper">
-													<div class="row">
-														<div class="col-md-10 col-lg-8">
-															<div class="panel panel-default share clearfix-xs">
+										</div>
+										<div class="media-body">
+											<div class="media-body-wrapper">
+												<div class="row">
+													<div class="col-md-10 col-lg-8">
+														<div class="panel panel-default share clearfix-xs">
+															<form action="PostNewsFeed" method="post">
 																<div class="panel-heading panel-heading-gray title">
 																	What&acute;s new</div>
 																<div class="panel-body">
@@ -133,309 +164,146 @@
 																<div class="panel-footer share-buttons">
 																	<a href="#"><i class="fa fa-map-marker"></i></a> <a
 																		href="#"><i class="fa fa-photo"></i></a> <a href="#"><i
-																		class="fa fa-video-camera"></i></a>
-																	<button type="submit"
-																		class="btn btn-primary btn-xs pull-right " href="#">Post</button>
+																		class="fa fa-video-camera"></i></a><input
+																		type="hidden" name="pid" value="0"> <input
+																		type="submit"
+																		class="btn btn-primary btn-xs pull-right "
+																		value="Post">
+																</div>
+															</form>
+														</div>
+													</div>
+												</div>
+												<div class="clearfix"></div>
+											</div>
+
+										</div>
+									</li>
+
+									<!-- Post Ends-->
+
+
+
+									<!-- Post Starts-->
+									<%
+										comment = newsfeed;
+										for (int i = 0; i < newsfeed.size(); i++) {
+											if ((newsfeed.get(i).getParentID()).equals("0")) {
+									%>
+									<li class="media media-clearfix-xs">
+										<div class="media-left">
+											<div class="user-wrapper">
+												<img src="CSS/images/<%=ad.getPhoto(newsfeed.get(i).getEmail())%>" alt="people"
+													class="img-circle" width="80" height="80" />
+
+												<div>
+													<a href="#"> <%
+ 	out.write(newsfeed.get(i).getEmail());%>
+													</a>
+												</div>
+												<div class="date">
+													<%
+														out.write(newsfeed.get(i).getTime());
+													%>
+												</div>
+											</div>
+										</div>
+										<div class="media-body">
+											<div class="media-body-wrapper">
+												<div class="panel panel-default">
+
+													<div class="panel-body">
+														<p>
+															<%
+																out.println(newsfeed.get(i).getPost());
+															%>
+														</p>
+
+													</div>
+													<!-- All Comments-->
+													<ul class="comments">
+
+														<li class="comment-form">
+															<div class="input-group">
+																<form action="PostNewsFeed" method="post">
+																	<input type="text" class="form-control" name="status" />
+																	<input name="pid" type="hidden"
+																		value="<%=newsfeed.get(i).getID()%>"> <span
+																		class="input-group-btn"> <input type="submit"
+																		name="action" class="btn btn-primary" value="reply" />
+																	</span>
+																</form>
+															</div>
+														</li>
+
+														<!-- Comment Start-->
+														<%
+															for (int j = 0; j < comment.size(); j++) {
+																		if (newsfeed.get(j).getParentID()
+																				.equals(newsfeed.get(i).getID())) {
+														%>
+														<li class="media">
+
+															<div class="media-body">
+																<div class="pull-right dropdown" data-show-hover="li">
+																	<a href="#" data-toggle="dropdown"
+																		class="toggle-button"> <i class="fa fa-pencil"></i>
+																	</a>
+
+																</div>
+
+
+
+																<a href="" class="comment-author pull-left"> <%
+ 	out.write(newsfeed.get(j).getEmail());
+ %>
+																</a> <span> <%
+ 	out.write(newsfeed.get(j).getPost());
+ %>
+																</span>
+																<div class="comment-date">
+																	<%
+																		out.write(newsfeed.get(j).getTime());
+																	%>
 																</div>
 															</div>
-														</div>
-													</div>
-													<div class="clearfix"></div>
-												</div>
+														</li>
 
-											</div>
-										</li>
+														<%
+															}
+																	}
+														%>
 
-										<!-- Post Ends-->
+														<!-- Comment End-->
+													</ul>
 
-
-
-										<!-- Post Starts-->
-
-										<li class="media media-clearfix-xs">
-											<div class="media-left">
-												<div class="user-wrapper">
-													<img src="CSS/images/profilepic.png" alt="people"
-														class="img-circle" width="80" />
-
-													<div>
-														<a href="#">Akash A..</a>
-													</div>
-													<div class="date">11 FEB</div>
+													<!-- All Comments-->
 												</div>
 											</div>
-											<div class="media-body">
-												<div class="media-body-wrapper">
-													<div class="panel panel-default">
+										</div>
+									</li>
 
-														<div class="panel-body">
-															<p>Its Snowing!!</p>
+									<!-- Post Ends-->
+									<%
+										}
+										}
+									%>
 
-														</div>
-														<!-- All Comments-->
-														<ul class="comments">
-
-															<!-- Comment Start-->
-															<li class="media">
-
-																<div class="media-body">
-																	<div class="pull-right dropdown" data-show-hover="li">
-																		<a href="#" data-toggle="dropdown"
-																			class="toggle-button"> <i class="fa fa-pencil"></i>
-																		</a>
-
-																	</div>
-																	<a href="" class="comment-author pull-left">Bill D.</a>
-																	<span>Yes its snowing, I know!</span>
-																	<div class="comment-date">18 Feb</div>
-																</div>
-															</li>
-
-															<!-- Comment End-->
-
-															<!-- Comment Start-->
-															<li class="media">
-
-																<div class="media-body">
-																	<div class="pull-right dropdown" data-show-hover="li">
-																		<a href="#" data-toggle="dropdown"
-																			class="toggle-button"> <i class="fa fa-pencil"></i>
-																		</a>
-
-																	</div>
-																	<a href="" class="comment-author pull-left">Bill D.</a>
-																	<span>Yes its snowing, I know!</span>
-																	<div class="comment-date">18 Feb</div>
-																</div>
-															</li>
-															<!-- Comment End-->
-
-															<!-- Comment Start-->
-															<li class="media">
-
-																<div class="media-body">
-																	<div class="pull-right dropdown" data-show-hover="li">
-																		<a href="#" data-toggle="dropdown"
-																			class="toggle-button"> <i class="fa fa-pencil"></i>
-																		</a>
-
-																	</div>
-																	<a href="" class="comment-author pull-left">Bill D.</a>
-																	<span>Yes its snowing, I know!</span>
-																	<div class="comment-date">18 Feb</div>
-																</div>
-															</li>
-															<!-- Comment End-->
-
-															<!-- New Comment-->
-															<li class="comment-form">
-																<div class="input-group">
-
-																	<input type="text" class="form-control" /> <span
-																		class="input-group-btn"> <a href=""
-																		class="btn btn-primary">Comment</a>
-																	</span>
-
-																</div>
-															</li>
-
-															<!-- New Comment-->
-														</ul>
-
-														<!-- All Comments-->
-													</div>
-												</div>
-											</div>
-										</li>
-
-										<!-- Post Ends-->
-
-
-										<!-- Post Starts-->
-
-										<li class="media media-clearfix-xs">
-											<div class="media-left">
-												<div class="user-wrapper">
-													<img src="CSS/images/profilepic.png" alt="people"
-														class="img-circle" width="80" />
-
-													<div>
-														<a href="#">Akash A..</a>
-													</div>
-													<div class="date">11 FEB</div>
-												</div>
-											</div>
-											<div class="media-body">
-												<div class="media-body-wrapper">
-													<div class="panel panel-default">
-
-														<div class="panel-body">
-															<p>If my ceiling fan could hold my weight, I'd never
-																be bored again.</p>
-
-														</div>
-														<!-- All Comments-->
-														<ul class="comments">
-
-
-
-															<!-- New Comment-->
-															<li class="comment-form">
-																<div class="input-group">
-
-																	<input type="text" class="form-control" /> <span
-																		class="input-group-btn"> <a href=""
-																		class="btn btn-primary">Comment</a>
-																	</span>
-
-																</div>
-															</li>
-
-															<!-- New Comment-->
-														</ul>
-
-														<!-- All Comments-->
-													</div>
-												</div>
-											</div>
-										</li>
-
-										<!-- Post Ends-->
-
-
-
-										<!-- Post Starts-->
-
-										<li class="media media-clearfix-xs">
-											<div class="media-left">
-												<div class="user-wrapper">
-													<img src="CSS/images/profilepic.png" alt="people"
-														class="img-circle" width="80" />
-
-													<div>
-														<a href="#">Akash A..</a>
-													</div>
-													<div class="date">11 FEB</div>
-												</div>
-											</div>
-											<div class="media-body">
-												<div class="media-body-wrapper">
-													<div class="panel panel-default">
-
-														<div class="panel-body">
-															<p>My alarm clock and I had a fight this morning. It
-																wanted me to get up, I refused...things escalated. Now
-																I'm awake and it's broken. I am not sure who won the
-																fight.</p>
-
-														</div>
-														<!-- All Comments-->
-														<ul class="comments">
-
-
-
-															<!-- New Comment-->
-															<li class="comment-form">
-																<div class="input-group">
-
-																	<input type="text" class="form-control" /> <span
-																		class="input-group-btn"> <a href=""
-																		class="btn btn-primary">Comment</a>
-																	</span>
-
-																</div>
-															</li>
-
-															<!-- New Comment-->
-														</ul>
-
-														<!-- All Comments-->
-													</div>
-												</div>
-											</div>
-										</li>
-
-										<!-- Post Ends-->
-
-
-										<!-- Post Starts-->
-
-										<li class="media media-clearfix-xs">
-											<div class="media-left">
-												<div class="user-wrapper">
-													<img src="CSS/images/profilepic.png" alt="people"
-														class="img-circle" width="80" />
-
-													<div>
-														<a href="#">Akash A..</a>
-													</div>
-													<div class="date">11 FEB</div>
-												</div>
-											</div>
-											<div class="media-body">
-												<div class="media-body-wrapper">
-													<div class="panel panel-default">
-
-														<div class="panel-body">
-															<p>I mistook the Facebook status box for Google
-																search!!</p>
-
-														</div>
-														<!-- All Comments-->
-														<ul class="comments">
-
-															<!-- Comment Start-->
-															<li class="media">
-
-																<div class="media-body">
-																	<div class="pull-right dropdown" data-show-hover="li">
-																		<a href="#" data-toggle="dropdown"
-																			class="toggle-button"> <i class="fa fa-pencil"></i>
-																		</a>
-
-																	</div>
-																	<a href="" class="comment-author pull-left">Bill D.</a>
-																	<span>It happened to me!</span>
-																	<div class="comment-date">18 Feb</div>
-																</div>
-															</li>
-															<!-- Comment End-->
-
-															<!-- New Comment-->
-															<li class="comment-form">
-																<div class="input-group">
-
-																	<input type="text" class="form-control" /> <span
-																		class="input-group-btn"> <a href=""
-																		class="btn btn-primary">Comment</a>
-																	</span>
-
-																</div>
-															</li>
-
-															<!-- New Comment-->
-														</ul>
-
-														<!-- All Comments-->
-													</div>
-												</div>
-											</div>
-										</li>
-
-										<!-- Post Ends-->
-								</div>
-
+								</ul>
+								<div id="loadMore">Load more</div>
 							</div>
+
 						</div>
 					</div>
 				</div>
-
-				<!--CLOSING OF TABS-->
 			</div>
-		</div>
 
-		<!-- Footer -->
-		<jsp:include page="include/footer.html" />
+			<!--CLOSING OF TABS-->
+		</div>
+	</div>
+
+	<!-- Footer -->
+	<jsp:include page="include/footer.html" />
 </body>
 
 </html>

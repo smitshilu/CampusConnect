@@ -16,6 +16,8 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
 
+import dataBase.AuthDAO;
+
 /**
  * Servlet implementation class PhotoUpload
  */
@@ -56,8 +58,8 @@ public class PhotoUpload extends HttpServlet {
 				for (FileItem item : multiparts) {
 					if (!item.isFormField()) {
 						String filename = new File(item.getName()).getName();
-						String fileextension = FilenameUtils
-								.getExtension(filename);
+						String fileextension = (FilenameUtils
+								.getExtension(filename)).toUpperCase();
 						String name = session.getAttribute("email") + "."
 								+ fileextension;
 						String filepath = "E:\\" + File.separator
@@ -68,7 +70,15 @@ public class PhotoUpload extends HttpServlet {
 								+ "\\" + name;
 						item.write(new File(filepath));
 
-						System.out.println("here" + filepath);
+						System.out.println(name);
+						
+						AuthDAO ad = new AuthDAO();
+						ad.insertPhoto((String) session.getAttribute("email"), name);
+						session.setAttribute("photo", "CSS/images/"+name);
+						
+						File fLocation = new File("CSS/images");
+						fLocation.listFiles();
+						
 						response.sendRedirect("profile.jsp");
 
 					}

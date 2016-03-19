@@ -49,8 +49,9 @@ public class LoginAuth extends HttpServlet {
 			session.setAttribute("email", email);
 			session.setAttribute("type", ad.getType("Type"));
 			session.setAttribute("profile", ad.getStudentProfile(email));
-			session.setAttribute("photopath", "CSS/images/"+email+".JPG");
-			response.sendRedirect("newsfeed.jsp");
+			System.out.println(ad.getPhoto(email));
+			session.setAttribute("photopath", "CSS/images/"+ad.getPhoto(email));
+			response.sendRedirect("NewsFeed");
 		}
 		else {
 			request.setAttribute("login_error", "Username and Password not correct");

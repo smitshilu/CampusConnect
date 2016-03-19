@@ -88,7 +88,7 @@
 	String major = studentprofilearray.get(0).getMajor();
 	String classof = studentprofilearray.get(0).getClassof();
 	String stuinterest = studentprofilearray.get(0).getStuinterest();
-	String photopath = "CSS/images/"+email+".JPG";
+	String photopath = (String) session.getAttribute("photopath");
 
 	PrintWriter pwout = response.getWriter();
 	response.setContentType("text/html");
