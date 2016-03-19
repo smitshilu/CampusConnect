@@ -62,8 +62,8 @@
 	href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
 	rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700"
-	rel="stylesheet" type="text/css">	
-	
+	rel="stylesheet" type="text/css">
+
 </head>
 
 <body class="feeding">
@@ -106,22 +106,21 @@
 				<div class="st-content-inner">
 
 					<div class="container">
-<%
-
-System.out.println(session.getAttribute("photo"));
-
-%>
+						<%
+							System.out.println(session.getAttribute("photo"));
+						%>
 
 						<div class="row">
 							<div class="col-md-9">
 								<ul class="timeline-list">
-<% AuthDAO ad = new AuthDAO(); %>
+									<%
+										AuthDAO ad = new AuthDAO();
+									%>
 									<!-- Post Starts-->
 									<li class="media media-clearfix-xs">
 										<div class="media-left">
 											<div class="user-wrapper">
-												<img
-													src="<%= session.getAttribute("photopath") %>"
+												<img src="<%=session.getAttribute("photopath")%>"
 													alt="people" class="img-circle" width="80" height="80" />
 												<div>
 													<a href="#"> <%
@@ -133,7 +132,8 @@ System.out.println(session.getAttribute("photo"));
 												<%
 													Date dt = new java.util.Date();
 
-													java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+													java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
+															"yyyy-MM-dd");
 													String datenow = sdf.format(dt);
 
 													ArrayList<GetNewsFeed> newsfeed = new ArrayList<>();
@@ -164,9 +164,8 @@ System.out.println(session.getAttribute("photo"));
 																<div class="panel-footer share-buttons">
 																	<a href="#"><i class="fa fa-map-marker"></i></a> <a
 																		href="#"><i class="fa fa-photo"></i></a> <a href="#"><i
-																		class="fa fa-video-camera"></i></a><input
-																		type="hidden" name="pid" value="0"> <input
-																		type="submit"
+																		class="fa fa-video-camera"></i></a><input type="hidden"
+																		name="pid" value="0"> <input type="submit"
 																		class="btn btn-primary btn-xs pull-right "
 																		value="Post">
 																</div>
@@ -193,12 +192,14 @@ System.out.println(session.getAttribute("photo"));
 									<li class="media media-clearfix-xs">
 										<div class="media-left">
 											<div class="user-wrapper">
-												<img src="CSS/images/<%=ad.getPhoto(newsfeed.get(i).getEmail())%>" alt="people"
-													class="img-circle" width="80" height="80" />
+												<img
+													src="CSS/images/<%=ad.getPhoto(newsfeed.get(i).getEmail())%>"
+													alt="people" class="img-circle" width="80" height="80" />
 
 												<div>
 													<a href="#"> <%
- 	out.write(newsfeed.get(i).getEmail());%>
+ 	out.write(newsfeed.get(i).getEmail());
+ %>
 													</a>
 												</div>
 												<div class="date">
@@ -290,7 +291,6 @@ System.out.println(session.getAttribute("photo"));
 									%>
 
 								</ul>
-								<div id="loadMore">Load more</div>
 							</div>
 
 						</div>
