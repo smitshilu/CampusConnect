@@ -206,4 +206,16 @@ public class AuthDAO {
 		}
 		return false;
 	}
+
+	public boolean insertNewsFeed(String email, String post, int parentID) {
+		String sql = "insert into newsfeed VALUES('" + null + "','" + email
+				+ "','" + parentID + "','" + post + "','" + null + "')";
+		try {
+			if (s.executeUpdate(sql) == 1)
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

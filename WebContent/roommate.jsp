@@ -1,3 +1,5 @@
+<%@ page import="java.util.*"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -67,62 +69,75 @@
 
 
 
-	<div class="container">
+	<div class="container"></div>
 
-		<ul class="nav nav-tabs">
-			<li><a href=newsfeed.jsp class="tabbold">News Feed</a></li>
-			<li class="active"><a href=roommate.jsp class="tabbold">Roommate
-					Finder</a></li>
-			<li><a href="#menu2" class="tabbold">Student Market</a></li>
+	<ul class="nav nav-tabs">
+		<li><a href=newsfeed.jsp class="tabbold">News Feed</a></li>
+		<li class="active"><a href=roommate.jsp class="tabbold">Roommate
+				Finder</a></li>
+		<li><a href="#menu2" class="tabbold">Student Market</a></li>
 
-		</ul>
+	</ul>
 
-		<div class="tab-content">
-			<div id="home" class="tab-pane fade in active">
+	<div class="tab-content">
+		<div id="home" class="tab-pane fade in active">
 
-				<!--tabs-->
-
-
+			<!--tabs-->
 
 
 
 
 
-				<!--NEWSFEEDS-->
 
 
-				<!-- this is the wrapper for the content -->
-				<div class="st-content">
-
-					<!-- extra div for emulating position:fixed of the menu -->
-					<div class="st-content-inner">
-
-						<div class="container">
+			<!--NEWSFEEDS-->
 
 
-							<div class="row">
-								<div class="col-md-9">
-									<ul class="timeline-list">
+			<!-- this is the wrapper for the content -->
+			<div class="st-content">
+
+				<!-- extra div for emulating position:fixed of the menu -->
+				<div class="st-content-inner">
+
+					<div class="container">
 
 
-										<!-- Post Starts-->
-										<li class="media media-clearfix-xs">
-											<div class="media-left">
-												<div class="user-wrapper">
-													<img src="CSS/images/profilepic.png" alt="people"
-														class="img-circle" width="80" />
-													<div>
-														<a href="#">Smit S.</a>
-													</div>
-													<div class="date">19 FEB</div>
-												</div>
+						<div class="row">
+							<div class="col-md-9">
+								<ul class="timeline-list">
+
+
+
+									<!-- Post Starts-->
+									<li class="media media-clearfix-xs">
+										<div class="media-left">
+											<div class="user-wrapper">
+												<img src="CSS/images/profilepic.png" alt="people"
+													class="img-circle" width="80" /> <a href="#"> <%
+ 	out.println(session.getAttribute("email"));
+ %>
+												</a>
+<%
+
+Date dt = new java.util.Date();
+
+java.text.SimpleDateFormat sdf = 
+new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+String datenow = sdf.format(dt);
+
+%>
+												<div class="date"><% out.println(datenow); %></div>
 											</div>
-											<div class="media-body">
-												<div class="media-body-wrapper">
-													<div class="row">
-														<div class="col-md-10 col-lg-8">
-															<div class="panel panel-default">
+										</div>
+										<div class="media-body">
+											<div class="media-body-wrapper">
+												<div class="row">
+													<div class="col-md-10 col-lg-8">
+														<div class="panel panel-default">
+															<form action="Roommate" method="get">
 																<div class="panel-heading panel-heading-gray ">
+
 																	Please fill out the form below:</div>
 																<div class="panel-body">
 																	<label class="radio-inline"> <input
@@ -141,290 +156,199 @@
 																		name="rent" />
 																</div>
 																<div class="panel-footer share-buttons">
-																	<button type="submit"
+																	<input type="submit"
 																		class="btn btn-primary btn-xs pull-right "
-																		onclick="displayOutput()">Post</button>
+																		name="action" class="btn btn-primary" value="post" />
 																</div>
+															</form>
+														</div>
+													</div>
+												</div>
+												<div class="clearfix"></div>
+											</div>
+
+										</div>
+									</li>
+
+									<!-- Post Ends-->
+
+
+
+									<!-- Post Starts-->
+
+									<%
+										Map<String, ArrayList> p = (Map) request.getAttribute("m");
+																																													ArrayList nindex = p.get("nindex");
+																																													ArrayList pindex = p.get("pindex");
+																																													ArrayList content = p.get("content");
+																																													ArrayList pid = p.get("pid");
+																																													ArrayList id = p.get("id");
+																																													ArrayList email = p.get("email");
+																																													ArrayList postdate = p.get("postdate");
+																																													String mainpost ="";
+																																													String primaryid="";
+																																												
+									%>
+
+									<%
+										for (int counter = 0; counter < pindex.size(); counter++) {
+																																																																												        if (nindex.contains(pindex.get(counter))) {																																	        	primaryid = (String) (id.get((int) pindex.get(counter)));																														mainpost = (String) (content.get((int) pindex.get(counter)));
+									%>
+									<!-- Post Starts-->
+
+									<li class="media media-clearfix-xs">
+										<div class="media-left">
+											<div class="user-wrapper">
+												<img src="CSS/images/profilepic.png" alt="people"
+													class="img-circle" width="80" />
+
+												<div>
+													<a href="#"> <%
+ 	out.println((String) email.get((int) pindex.get(counter)));
+ %>
+													</a>
+												</div>
+												<div class="date"><%
+ 	out.println((String) postdate.get((int) pindex.get(counter)));
+ %></div>
+											</div>
+										</div>
+										<div class="media-body">
+											<div class="media-body-wrapper">
+												<div class="panel panel-default">
+
+													<div class="panel-body">
+														<p id="o">
+
+
+															<%
+																out.println("Searching for: "+mainpost.split("@")[0]);
+															%>
+
+															<br>
+
+															<%
+																out.println("Description: "+mainpost.split("@")[1]);
+															%><br>
+															<%
+																out.println("Address: "+mainpost.split("@")[2]);
+															%><br>
+															<%
+																if(mainpost.split("@").length == 4) 
+																												 out.println("Rent: "+mainpost.split("@")[3]);
+															%><br> <br>
+														<div id="a"></div>
+														<div id="d"></div>
+														<div id="r"></div>
+													</div>
+													<!-- All Comments-->
+													<ul class="comments">
+
+														<!-- New Comment-->
+														<li class="comment-form">
+															<div class="input-group">
+																<form action="Roommate" method="get">
+																	<input type="text" class="form-control" name="replynew" />
+																	<input name="replyposts" type="hidden"
+																		value="<%=primaryid%>"> <span
+																		class="input-group-btn"> <input type="submit"
+																		name="action" class="btn btn-primary" value="reply" />
+																	</span>
+																</form>
 															</div>
-														</div>
-													</div>
-													<div class="clearfix"></div>
-												</div>
+														</li>
+														<%
+															}else{primaryid="abcdefghijklmnopqrstuvwxyzqwerty";}
+														%>
+														<!-- New Comment-->
 
-											</div>
-										</li>
-
-										<!-- Post Ends-->
-
-
-
-										<!-- Post Starts-->
-										<div id="newDivs"></div>
-										<li class="media media-clearfix-xs">
-											<div class="media-left">
-												<div class="user-wrapper">
-													<img src="CSS/images/profilepic.png" alt="people"
-														class="img-circle" width="80" />
-
-													<div>
-														<a href="#">Smit S.</a>
-													</div>
-													<div class="date">19 FEB</div>
-												</div>
-											</div>
-											<div class="media-body">
-												<div class="media-body-wrapper">
-													<div class="panel panel-default">
-
-														<div class="panel-body">
-															<p id="o">Its Snowing!!</p>
-
-															<div id="a"></div>
-															<div id="d"></div>
-															<div id="r"></div>
-														</div>
-														<!-- All Comments-->
-														<ul class="comments">
+														<%
+															for (int c = 0; c < pid.size(); c++) {
+																																																																																	if(pid.get(c).equals(primaryid)){
+														%>
 
 
-															<!-- New Comment-->
-															<li class="comment-form">
-																<div class="input-group">
+														<li class="media">
 
-																	<input type="text" class="form-control" /> <span
-																		class="input-group-btn"> <a href=""
-																		class="btn btn-primary">Comment</a>
-																	</span>
+															<div class="media-body">
+																<div class="pull-right dropdown" data-show-hover="li">
+																	<a href="#" data-toggle="dropdown"
+																		class="toggle-button"> <i class="fa fa-pencil"></i>
+																	</a>
 
 																</div>
-															</li>
+																<a href="" class="comment-author pull-left"><% out.println(session.getAttribute("email")); %>></a>
+																<span> <%
+ 	out.println(content.get(c));
+ %>
+																</span>
+																<div class="comment-date">18 Feb</div>
+															</div>
+														</li>
+														<%
+															}
+																																																																																  }
+														%>
+													</ul>
 
-															<!-- New Comment-->
-														</ul>
-
-														<!-- All Comments-->
-													</div>
+													<!-- All Comments-->
 												</div>
 											</div>
-										</li>
+										</div>
+									</li>
 
-										<!-- Post Ends-->
+									<%
+										}
+									%>
 
+									<!-- Post Ends-->
 
-										<!-- Post Starts-->
+									<!-- Post Ends-->
 
-										<li class="media media-clearfix-xs">
-											<div class="media-left">
-												<div class="user-wrapper">
-													<img src="CSS/images/profilepic.png" alt="people"
-														class="img-circle" width="80" />
-
-													<div>
-														<a href="#">Akash A..</a>
-													</div>
-													<div class="date">11 FEB</div>
-												</div>
-											</div>
-											<div class="media-body">
-												<div class="media-body-wrapper">
-													<div class="panel panel-default">
-
-														<div class="panel-body">
-															<p>If my ceiling fan could hold my weight, I'd never
-																be bored again.</p>
-
-														</div>
-														<!-- All Comments-->
-														<ul class="comments">
-
-
-
-															<!-- New Comment-->
-															<li class="comment-form">
-																<div class="input-group">
-
-																	<input type="text" class="form-control" /> <span
-																		class="input-group-btn"> <a href=""
-																		class="btn btn-primary">Comment</a>
-																	</span>
-
-																</div>
-															</li>
-
-															<!-- New Comment-->
-														</ul>
-
-														<!-- All Comments-->
-													</div>
-												</div>
-											</div>
-										</li>
-
-										<!-- Post Ends-->
-
-
-
-										<!-- Post Starts-->
-
-										<li class="media media-clearfix-xs">
-											<div class="media-left">
-												<div class="user-wrapper">
-													<img src="CSS/images/profilepic.png" alt="people"
-														class="img-circle" width="80" />
-
-													<div>
-														<a href="#">Akash A..</a>
-													</div>
-													<div class="date">11 FEB</div>
-												</div>
-											</div>
-											<div class="media-body">
-												<div class="media-body-wrapper">
-													<div class="panel panel-default">
-
-														<div class="panel-body">
-															<p>My alarm clock and I had a fight this morning. It
-																wanted me to get up, I refused...things escalated. Now
-																I'm awake and it's broken. I am not sure who won the
-																fight.</p>
-
-														</div>
-														<!-- All Comments-->
-														<ul class="comments">
-
-
-
-															<!-- New Comment-->
-															<li class="comment-form">
-																<div class="input-group">
-
-																	<input type="text" class="form-control" /> <span
-																		class="input-group-btn"> <a href=""
-																		class="btn btn-primary">Comment</a>
-																	</span>
-
-																</div>
-															</li>
-
-															<!-- New Comment-->
-														</ul>
-
-														<!-- All Comments-->
-													</div>
-												</div>
-											</div>
-										</li>
-
-										<!-- Post Ends-->
-
-
-										<!-- Post Starts-->
-
-										<li class="media media-clearfix-xs">
-											<div class="media-left">
-												<div class="user-wrapper">
-													<img src="CSS/images/profilepic.png" alt="people"
-														class="img-circle" width="80" />
-
-													<div>
-														<a href="#">Akash A..</a>
-													</div>
-													<div class="date">11 FEB</div>
-												</div>
-											</div>
-											<div class="media-body">
-												<div class="media-body-wrapper">
-													<div class="panel panel-default">
-
-														<div class="panel-body">
-															<p>I mistook the Facebook status box for Google
-																search!!</p>
-
-														</div>
-														<!-- All Comments-->
-														<ul class="comments">
-
-															<!-- Comment Start-->
-															<li class="media">
-
-																<div class="media-body">
-																	<div class="pull-right dropdown" data-show-hover="li">
-																		<a href="#" data-toggle="dropdown"
-																			class="toggle-button"> <i class="fa fa-pencil"></i>
-																		</a>
-
-																	</div>
-																	<a href="" class="comment-author pull-left">Bill D.</a>
-																	<span>It happened to me!</span>
-																	<div class="comment-date">18 Feb</div>
-																</div>
-															</li>
-															<!-- Comment End-->
-
-															<!-- New Comment-->
-															<li class="comment-form">
-																<div class="input-group">
-
-																	<input type="text" class="form-control" /> <span
-																		class="input-group-btn"> <a href=""
-																		class="btn btn-primary">Comment</a>
-																	</span>
-
-																</div>
-															</li>
-
-															<!-- New Comment-->
-														</ul>
-
-														<!-- All Comments-->
-													</div>
-												</div>
-											</div>
-										</li>
-
-										<!-- Post Ends-->
-								</div>
+								</ul>
 
 							</div>
+
 						</div>
 					</div>
 				</div>
-
-				<!--CLOSING OF TABS-->
 			</div>
+
+			<!--CLOSING OF TABS-->
 		</div>
+	</div>
 
-		<!-- Footer -->
-		<jsp:include page="include/footer.html" />
+	<!-- Footer -->
+	<jsp:include page="include/footer.html" />
 
-		<script type="text/javascript">
-			function displayOutput() {
-				var desc = document.getElementById("description").value;
-				var add = document.getElementById("add").value;
-				var amt = document.getElementById("amt").value;
-				var radios = document.getElementsByName("optradio");
-				for (var i = 0, length = radios.length; i < length; i++) {
-					if (radios[i].checked) {
+	<script type="text/javascript">
+		function displayOutput() {
+			var desc = document.getElementById("description").value;
+			var add = document.getElementById("add").value;
+			var amt = document.getElementById("amt").value;
+			var radios = document.getElementsByName("optradio");
+			for (var i = 0, length = radios.length; i < length; i++) {
+				if (radios[i].checked) {
 
-						var opt = radios[i].value;
+					var opt = radios[i].value;
 
-						break;
-					}
-				}
-
-				if (opt.length == 0) {
-					alert("Please enter a valid input");
-					return;
-				}
-				document.getElementById("o").innerHTML = "Looking for a " + opt;
-				document.getElementById("a").innerHTML = "Address: " + add;
-				document.getElementById("d").innerHTML = "Description: " + desc;
-				if (amt.length == 0) {
-				} else {
-					document.getElementById("r").innerHTML = "Rent: " + amt;
+					break;
 				}
 			}
-		</script>
+
+			if (opt.length == 0) {
+				alert("Please enter a valid input");
+				return;
+			}
+			document.getElementById("o").innerHTML = "Looking for a " + opt;
+			document.getElementById("a").innerHTML = "Address: " + add;
+			document.getElementById("d").innerHTML = "Description: " + desc;
+			if (amt.length == 0) {
+			} else {
+				document.getElementById("r").innerHTML = "Rent: " + amt;
+			}
+		}
+	</script>
 </body>
 
 </html>

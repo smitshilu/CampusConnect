@@ -81,7 +81,7 @@
 		<ul class="nav nav-tabs">
 			<li class="active"><a href=newsfeed.jsp class="tabbold">News
 					Feed</a></li>
-			<li><a href=roommate.jsp class="tabbold">Roommate Finder</a></li>
+			<li><a href="Index" class="tabbold">Roommate Finder</a></li>
 			<li><a href="#menu2" class="tabbold">Student Market</a></li>
 
 		</ul>
