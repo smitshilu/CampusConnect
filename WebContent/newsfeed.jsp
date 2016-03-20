@@ -123,7 +123,7 @@
 												<img src="<%=session.getAttribute("photopath")%>"
 													alt="people" class="img-circle" width="80" height="80" />
 												<div>
-													<a href="#"> <%
+													<a href="profile.jsp"> <%
  	out.println(session.getAttribute("email"));
  %>
 													</a>
@@ -197,7 +197,7 @@
 													alt="people" class="img-circle" width="80" height="80" />
 
 												<div>
-													<a href="#"> <%
+													<a href="viewprofile.jsp?Email=<%=newsfeed.get(i).getEmail()%>"> <%
  	out.write(newsfeed.get(i).getEmail());
  %>
 													</a>
@@ -255,7 +255,7 @@
 
 
 
-																<a href="" class="comment-author pull-left"> <%
+																<a href="viewprofile.jsp?Email=<%=newsfeed.get(j).getEmail()%>" class="comment-author pull-left"> <%
  	out.write(newsfeed.get(j).getEmail());
  %>
 																</a> <span> <%

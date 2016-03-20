@@ -1,4 +1,5 @@
 <%@ page import="java.util.*"%>
+<%@page import="dataBase.AuthDAO"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -112,8 +113,8 @@
 									<li class="media media-clearfix-xs">
 										<div class="media-left">
 											<div class="user-wrapper">
-												<img src="CSS/images/profilepic.png" alt="people"
-													class="img-circle" width="80" /> <a href="#"> <%
+												<img src="<%=session.getAttribute("photopath")%>" alt="people"
+													class="img-circle" width="80" height="80" /> <a href="#"> <%
  	out.println(session.getAttribute("email"));
  %>
 												</a>
@@ -191,6 +192,8 @@ String datenow = sdf.format(dt);
 									%>
 
 									<%
+									AuthDAO ad = new AuthDAO();
+									
 										for (int counter = 0; counter < pindex.size(); counter++) {
 																																																																												        if (nindex.contains(pindex.get(counter))) {																																	        	primaryid = (String) (id.get((int) pindex.get(counter)));																														mainpost = (String) (content.get((int) pindex.get(counter)));
 									%>
@@ -199,13 +202,12 @@ String datenow = sdf.format(dt);
 									<li class="media media-clearfix-xs">
 										<div class="media-left">
 											<div class="user-wrapper">
-												<img src="CSS/images/profilepic.png" alt="people"
-													class="img-circle" width="80" />
+												<img src="CSS/images/<%=ad.getPhoto((String) email.get((int) pindex.get(counter)))%>" alt="people"
+													class="img-circle" width="80" height="80"/>
 
 												<div>
 													<a href="#"> <%
- 	out.println((String) email.get((int) pindex.get(counter)));
- %>
+ 	out.println((String) email.get((int) pindex.get(counter)));%>
 													</a>
 												</div>
 												<div class="date"><%
