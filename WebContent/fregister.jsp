@@ -30,8 +30,8 @@
 <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
 
 
-<!-- Custom CSS -->
-<link href="CSS/style.css" rel="stylesheet" type="text/css">
+<!-- Custom css -->
+<link href="css/style.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="scripts/scripts.js"></script>
 <script type="text/javascript" src="scripts/jquery.easing.1.3.min.js"></script>
 <body>
@@ -44,7 +44,7 @@
 	<!-- NAV BAR-->
 	<br>
 	<div style="color: white" id="error"></div>
-	<form id="valid">
+	<!-- <form id="valid"> -->
 		<br> <br> <br>
 
 		<div class="col-sm-5 form-box ">
@@ -58,7 +58,7 @@
 				</div>
 			</div>
 			<div class="form-bottom">
-				<form role="form" action="" method="post"
+				<form role="form" action="FRegistration" method="post"
 					class="registration-form center_div">
 					<div class="form-group">
 						<label style="color: white" class="" for="ffname">First
@@ -68,7 +68,7 @@
 					</div>
 					<div class="form-group">
 						<label style="color: white" class="" for="flname">Last
-							name</label> <input id="phone" type="text" name="flname"
+							name</label> <input id="lname" type="text" name="flname"
 							placeholder="Last name..." class="form-last-name form-control"
 							id="form-last-name" required>
 					</div>
@@ -80,14 +80,14 @@
 
 					<div class="form-group">
 						<label style="color: white" class="" for="fdob">Date of
-							Birth</label> <input type="text" name="fdob" placeholder="mm-dd-yyyy"
+							Birth</label> <input type="date" name="fdob" placeholder="mm-dd-yyyy"
 							class="form-email form-control" id="form-email" required>
 					</div>
 					<div style="color: white" class="form-group">
-						<label class="" for="fsex">Gender</label> <br> <label
-							class="radio-inline"><input type="radio" name="fsex">Male</label>
-						<label class="radio-inline"><input type="radio"
-							name="fsex">Female</label>
+						<label style="color: white" class="" for="fsex">Gender</label> <br>
+					<label style="color: white" class="radio-inline"><input
+						type="radio" name="fsex" value="male">Male</label> <label style="color: white"
+						class="radio-inline"><input type="radio" name="fsex" value="female">Female</label>
 
 					</div>
 					<div class="form-group">
@@ -101,10 +101,10 @@
 
 
 						<select class="form-control" name="department">
-							<option value="volvo">Computer Science</option>
-							<option value="saab">Performing Arts</option>
-							<option value="opel">Physics</option>
-							<option value="audi">Biology</option>
+							<option value="Computer Science">Computer Science</option>
+							<option value="Performing Arts">Performing Arts</option>
+							<option value="Physics">Physics</option>
+							<option value="Biology">Biology</option>
 						</select>
 
 
@@ -151,7 +151,7 @@
 		<jsp:include page="include/footer.html" />
 </body>
 
-<script>
+<!-- <script>
 	$("#valid").submit(function(event) {
 
 		var error = "";
@@ -185,5 +185,5 @@
 		return pattern.test(emailAddress);
 	};
 </script>
-
+ -->
 </html>

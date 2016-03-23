@@ -120,6 +120,42 @@ public class AuthDAO {
 		return false;
 	}
 
+	public boolean insertFacultyRecord(String fname, String lname, String femail, String dob, String fsex, String fpwd,
+			String fdept, String fcourse, String frarea, String fofhours, String fofloc) {
+
+		try {
+
+			String sql = "INSERT INTO faculty VALUES ('" + fname + "', '" + lname + "', '" + femail + "', '" + dob
+					+ "', '" + fsex + "','" + fdept + "', '" + fcourse + "','" + frarea + "','" + fofhours
+					+ "','" + fofloc + "')";
+
+			int random_number = (int) Math.round(Math.random() * 999999);
+
+			String sql1 = "INSERT INTO login VALUES ('" + femail + "', '" + fpwd + "', 2)";
+			String sql2 = "INSERT INTO emailveri VALUES ('" + femail + "', " + random_number + ")";
+
+			System.out.println(sql + " " + sql1);
+			if (s.executeUpdate(sql) == 1) {
+				if (s.executeUpdate(sql1) == 1) {
+					// EmailVeri ev = new EmailVeri();
+					// ev.sendMail(email, random_number);
+					if (s.executeUpdate(sql2) == 1) {
+						return true;
+					}
+				}
+				return false;
+			}
+			// return false;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+
+		}
+		return false;
+	}
+
+	
 	public boolean checkEmailAvailble(String email) {
 
 		String query = "select * from student where Email = '" + email + "'";
