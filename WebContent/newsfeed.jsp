@@ -8,7 +8,7 @@
 <html lang="en">
 
 <%
-	if (session.getAttribute("email") == null)
+	if (session.getAttribute("email").equals(null))
 		response.sendRedirect("index.jsp");
 %>
 
@@ -87,8 +87,8 @@
 	<ul class="nav nav-tabs">
 		<li class="active"><a href=newsfeed.jsp class="tabbold">News
 				Feed</a></li>
-		<li><a href="Index" class="tabbold">Roommate Finder</a></li>
-		<li><a href="#menu2" class="tabbold">Student Market</a></li>
+		<li><a href="RoomMateFeed" class="tabbold">Roommate Finder</a></li>
+		<li><a href="studentmarket.jsp" class="tabbold">Student Market</a></li>
 
 	</ul>
 
@@ -252,8 +252,6 @@
 																	</a>
 
 																</div>
-
-
 
 																<a href="viewprofile.jsp?Email=<%=newsfeed.get(j).getEmail()%>" class="comment-author pull-left"> <%
  	out.write(newsfeed.get(j).getEmail());

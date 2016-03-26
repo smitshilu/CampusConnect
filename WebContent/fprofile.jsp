@@ -1,8 +1,23 @@
+<%@ page import="model.FacultyProfile"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.io.*"%>
+<%@ page import="dataBase.AuthDAO"%>
 <!doctype html>
 
 <html lang="en-gb" class="no-js">
 
 <head>
+
+<%
+	if ((session.getAttribute("email")) == null)
+		response.sendRedirect("index.jsp");
+
+String temp_email = (String) request.getParameter("Email");
+AuthDAO ad = new AuthDAO();
+PrintWriter pwout = response.getWriter();
+response.setContentType("text/html");
+
+%>
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -76,7 +91,27 @@
 
 
 
+	<%
 
+if((ad.getType(temp_email)).equals("3")) {
+ArrayList<FacultyProfile> studentprofilearray = ad.getFacultyProfile(temp_email);
+
+String fname = studentprofilearray.get(0).getFname();
+String lname = studentprofilearray.get(0).getLname();
+String dob = studentprofilearray.get(0).getDob();
+String sex = studentprofilearray.get(0).getFsex();
+String department = studentprofilearray.get(0).getFdept();
+String courses = studentprofilearray.get(0).getFcourse();
+String rarea = studentprofilearray.get(0).getFrarea();
+String ohours = studentprofilearray.get(0).getFofhours();
+String flocation = studentprofilearray.get(0).getFofloc();
+String photopath = "CSS/images/"+ad.getPhoto(temp_email);
+
+
+
+	pwout.write("<body>");
+	pwout.write("<header class='header'> </header>");
+%>
 
 
 	<!-- Navigation -->
@@ -100,8 +135,8 @@
 				<div class="col-md-8 tileBox">
 					<div class="txtHead">
 						<h2>
-							Hello, I am <span name="ffn">Sam</span><span name="fln">
-								Doe...</span>
+							Hello, I am <span name="ffn"><%= fname %></span><span name="fln">
+								<%= lname %>...</span>
 						</h2>
 
 
@@ -109,25 +144,25 @@
 
 
 					<p name="femail">
-						<b>Email:</b> abcd@abc.com
+						<b>Email:</b> <%= temp_email %>
 					</p>
 					<p name="fdob">
-						<b>Date of Birth:</b> abcd@abc.com
+						<b>Date of Birth:</b> <%= dob %>
 					</p>
 					<p name="fsex">
-						<b>Gender:</b> abcd@abc.com
+						<b>Gender:</b> <%= sex %>
 					</p>
 					<p name="department">
-						<b>Department:</b> abcd@abc.com
+						<b>Department:</b> <%= department %>
 					</p>
 					<p name="frarea">
-						<b>Research Areas:</b> abcd@abc.com
+						<b>Research Areas:</b> <%= rarea %>
 					</p>
 					<p name="fofficehours">
-						<b>Office Hours:</b> abcd@abc.com
+						<b>Office Hours:</b> <%= ohours %>
 					</p>
 					<p name="flocation">
-						<b>Location:</b> abcd@abc.com
+						<b>Location:</b> <%= flocation %>
 					</p>
 
 				</div>
@@ -135,7 +170,9 @@
 			</div>
 		</div>
 	</section>
-
+<%
+}
+%>
 	<!--Skills-->
 	<section id="skills" class="secPad white">
 		<div class="container">

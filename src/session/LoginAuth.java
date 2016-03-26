@@ -49,7 +49,7 @@ public class LoginAuth extends HttpServlet {
 		if (ad.LoginAuth(email, password)) {
 			HttpSession session = request.getSession();
 			session.setAttribute("email", email);
-			session.setAttribute("type", ad.getType("Type"));
+			session.setAttribute("type", ad.getType(email));
 			session.setAttribute("profile", ad.getStudentProfile(email));
 			System.out.println(ad.getPhoto(email));
 			session.setAttribute("photopath", "CSS/images/"+ad.getPhoto(email));

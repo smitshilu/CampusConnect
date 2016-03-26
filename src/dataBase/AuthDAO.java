@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.FacultyProfile;
 import model.GetNewsFeed;
+import model.GetRoomMateFeed;
 import model.StudentProfile;
 import eMail.EmailVeri;
 
@@ -60,16 +62,18 @@ public class AuthDAO {
 	}
 
 	public String getType(String email) {
-		String sql = "select Type from login where email='" + email + "'";
+		System.out.println("There is email " + email);
+		String sql = "select * from login where Email='" + email + "'";
 
 		try {
 
-			java.sql.ResultSet rs = s.executeQuery(sql);
+			ResultSet rs = s.executeQuery(sql);
 			String type = "null";
 
 			while (rs.next()) {
 				type = rs.getString("Type");
 			}
+			System.out.println("There is type " + type);
 			return type;
 
 		} catch (SQLException e) {
@@ -95,7 +99,8 @@ public class AuthDAO {
 					+ "', 2)";
 			String sql2 = "INSERT INTO emailveri VALUES ('" + email + "', "
 					+ random_number + ")";
-			String sql3 = "INSERT INTO photo VALUES ('" + email + "', 'default.jpg')";
+			String sql3 = "INSERT INTO photo VALUES ('" + email
+					+ "', 'default.jpg')";
 
 			System.out.println(sql + " " + sql1);
 			if (s.executeUpdate(sql) == 1) {
@@ -120,19 +125,23 @@ public class AuthDAO {
 		return false;
 	}
 
-	public boolean insertFacultyRecord(String fname, String lname, String femail, String dob, String fsex, String fpwd,
-			String fdept, String fcourse, String frarea, String fofhours, String fofloc) {
+	public boolean insertFacultyRecord(String fname, String lname,
+			String femail, String dob, String fsex, String fpwd, String fdept,
+			String fcourse, String frarea, String fofhours, String fofloc) {
 
 		try {
 
-			String sql = "INSERT INTO faculty VALUES ('" + fname + "', '" + lname + "', '" + femail + "', '" + dob
-					+ "', '" + fsex + "','" + fdept + "', '" + fcourse + "','" + frarea + "','" + fofhours
-					+ "','" + fofloc + "')";
+			String sql = "INSERT INTO faculty VALUES ('" + fname + "', '"
+					+ lname + "', '" + femail + "', '" + dob + "', '" + fsex
+					+ "','" + fdept + "', '" + fcourse + "','" + frarea + "','"
+					+ fofhours + "','" + fofloc + "');";
 
 			int random_number = (int) Math.round(Math.random() * 999999);
 
-			String sql1 = "INSERT INTO login VALUES ('" + femail + "', '" + fpwd + "', 2)";
-			String sql2 = "INSERT INTO emailveri VALUES ('" + femail + "', " + random_number + ")";
+			String sql1 = "INSERT INTO login VALUES ('" + femail + "', '"
+					+ fpwd + "', 2);";
+			String sql2 = "INSERT INTO emailveri VALUES ('" + femail + "', "
+					+ random_number + ");";
 
 			System.out.println(sql + " " + sql1);
 			if (s.executeUpdate(sql) == 1) {
@@ -155,7 +164,6 @@ public class AuthDAO {
 		return false;
 	}
 
-	
 	public boolean checkEmailAvailble(String email) {
 
 		String query = "select * from student where Email = '" + email + "'";
@@ -215,6 +223,47 @@ public class AuthDAO {
 		}
 		return null;
 	}
+	
+
+	public ArrayList<FacultyProfile> getFacultyProfile(String femail) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		ResultSet rs = null;
+
+		String query = "SELECT * FROM `faculty` where Femail = '" + femail + "'";
+
+		try {
+			rs = s.executeQuery(query);
+
+			ArrayList<FacultyProfile> profile = new ArrayList<>();
+
+			while (rs.next()) {
+				String getFname = rs.getString("Ffname");
+				String getLname = rs.getString("Flname");
+				String getFemail = rs.getString("Femail");
+				String getDob = rs.getString("Fdob");
+				String getFsex = rs.getString("Fsex");
+				String getFdept = rs.getString("Fdept");
+				String getFcourse = rs.getString("Fcourse");
+				String getFrarea = rs.getString("Frarea");
+				String getFofhours = rs.getString("Fohours");
+				String getFofloc = rs.getString("Folocation");
+				
+				FacultyProfile facultyProfile = new FacultyProfile(getFname, getLname, getFemail, getDob, getFsex,
+						getFdept, getFcourse, getFrarea, getFofhours, getFofloc);
+				profile.add(facultyProfile);
+			}
+			return profile;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 
 	public boolean verifyMail(String email, int code) {
 		String sql = "select * from emailveri where email='" + email + "'";
@@ -277,6 +326,40 @@ public class AuthDAO {
 		return null;
 	}
 
+	public ArrayList<GetRoomMateFeed> getAllRoomMateFeeds() {
+
+		ResultSet rs = null;
+
+		String query = "SELECT * FROM `roommatefeed` ORDER BY time DESC";
+
+		try {
+			Statement s = conn.createStatement();
+			rs = s.executeQuery(query);
+
+			ArrayList<GetRoomMateFeed> FeedList = new ArrayList<>();
+
+			while (rs.next()) {
+				String ID = rs.getString("ID");
+				String datetime = rs.getString("Time");
+				String description = rs.getString("Description");
+				String amount = rs.getString("Amount");
+				String address = rs.getString("Address");
+				String parentID = rs.getString("ParentID");
+				String email = rs.getString("Email");
+				String roommatetype = rs.getString("roommatetype");
+				GetRoomMateFeed feedcontent = new GetRoomMateFeed(ID, email,
+						parentID, description, amount, address, datetime,
+						roommatetype);
+				FeedList.add(feedcontent);
+			}
+			return FeedList;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public boolean insertNewsFeed(String id, String email, String pid,
 			String post, String datenow) {
 		String sql = "insert into newsfeed VALUES('" + id + "','" + email
@@ -289,10 +372,13 @@ public class AuthDAO {
 		}
 		return false;
 	}
-	
-	public boolean insertPhoto(String email, String photoname) {
-		String sql = "UPDATE photo SET PhotoName = '"+photoname+"' WHERE Email = '"
-						+ email + "';";
+
+	public boolean insertRoomMateFeed(String id, String email, String pid,
+			String description, String roommatetype, String amount,
+			String address, String datenow) {
+		String sql = "insert into roommatefeed VALUES('" + id + "','" + email
+				+ "','" + pid + "','" + description + "','" + roommatetype
+				+ "','" + amount + "','" + address + "', '" + datenow + "')";
 		try {
 			if (s.executeUpdate(sql) == 1)
 				return true;
@@ -301,17 +387,29 @@ public class AuthDAO {
 		}
 		return false;
 	}
-	
+
+	public boolean insertPhoto(String email, String photoname) {
+		String sql = "UPDATE photo SET PhotoName = '" + photoname
+				+ "' WHERE Email = '" + email + "';";
+		try {
+			if (s.executeUpdate(sql) == 1)
+				return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public String getPhoto(String email) {
-		String sql = "select * from photo WHERE Email = '"+ email + "';";
+		String sql = "select * from photo WHERE Email = '" + email + "';";
 		try {
 			Statement s = conn.createStatement();
 			ResultSet rs = s.executeQuery(sql);
-			
-			while(rs.next()) {
+
+			while (rs.next()) {
 				return rs.getString("PhotoName");
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

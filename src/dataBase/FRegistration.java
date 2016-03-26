@@ -17,29 +17,33 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/FRegistration")
 public class FRegistration extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public FRegistration() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	public FRegistration() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("WELCOME++++++++++++++++");
+		response.getWriter().append("Served at: ")
+				.append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
 		String fname = request.getParameter("ffname");
@@ -56,25 +60,25 @@ public class FRegistration extends HttpServlet {
 		String fpwd = request.getParameter("fpwd");
 		String fdept = request.getParameter("department");
 		String fcourse = request.getParameter("courses");
-		
+
 		String frarea = request.getParameter("rarea");
 		String fofhours = request.getParameter("ohours");
 		String fofloc = request.getParameter("olocation");
-		
 
-		System.out.println(fname + " ++ " + lname + " ++ " + femail + " ++ " + dob
-				+ " ++ " + fsex + " ++ " + fpwd + " ++ " + fdept
-				+ " ++ " + fdept + " ++ " + fcourse+ " ++ " +frarea+ " ++ " +fofhours+ " ++ " +fofloc);
+		System.out.println(fname + " ++ " + lname + " ++ " + femail + " ++ "
+				+ dob + " ++ " + fsex + " ++ " + fpwd + " ++ " + fdept + " ++ "
+				+ fdept + " ++ " + fcourse + " ++ " + frarea + " ++ "
+				+ fofhours + " ++ " + fofloc);
 
 		AuthDAO ad = new AuthDAO();
-		
 
 		String check_email[] = femail.split("@");
 
 		if ((check_email[1]).equals("albany.edu")) {
 			if (!ad.checkEmailAvailble(femail)) {
-				if (ad.insertFacultyRecord(fname, lname, femail,formatter.format(dob),
-						fsex, fpwd, fdept, fcourse, frarea, fofhours,fofloc)) {
+				if (ad.insertFacultyRecord(fname, lname, femail,
+						formatter.format(dob), fsex, fpwd, fdept, fcourse,
+						frarea, fofhours, fofloc)) {
 					response.sendRedirect("newsfeed.jsp");
 				}
 			} else {
@@ -89,8 +93,6 @@ public class FRegistration extends HttpServlet {
 			getServletContext().getRequestDispatcher("/fregister.jsp").forward(
 					request, response);
 		}
-
-		doGet(request, response);
 	}
 
 }

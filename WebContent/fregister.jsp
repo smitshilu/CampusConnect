@@ -31,7 +31,7 @@
 
 
 <!-- Custom css -->
-<link href="css/style.css" rel="stylesheet" type="text/css">
+<link href="CSS/style.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="scripts/scripts.js"></script>
 <script type="text/javascript" src="scripts/jquery.easing.1.3.min.js"></script>
 <body>

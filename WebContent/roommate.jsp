@@ -1,5 +1,6 @@
 <%@ page import="java.util.*"%>
 <%@page import="dataBase.AuthDAO"%>
+<%@page import="model.GetRoomMateFeed"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -76,7 +77,8 @@
 		<li><a href=newsfeed.jsp class="tabbold">News Feed</a></li>
 		<li class="active"><a href=roommate.jsp class="tabbold">Roommate
 				Finder</a></li>
-		<li><a href="#menu2" class="tabbold">Student Market</a></li>
+		<li><a href="studentmarket.jsp" class="tabbold">Student
+				Market</a></li>
 
 	</ul>
 
@@ -110,25 +112,34 @@
 
 
 									<!-- Post Starts-->
+									<%
+										AuthDAO ad = new AuthDAO();
+									%>
 									<li class="media media-clearfix-xs">
 										<div class="media-left">
 											<div class="user-wrapper">
-												<img src="<%=session.getAttribute("photopath")%>" alt="people"
-													class="img-circle" width="80" height="80" /> <a href="#"> <%
+												<img src="<%=session.getAttribute("photopath")%>"
+													alt="people" class="img-circle" width="80" height="80" />
+												<a href="#"> <%
  	out.println(session.getAttribute("email"));
  %>
 												</a>
-<%
+												<%
+													Date dt = new java.util.Date();
+													java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
+															"yyyy-MM-dd");
+													String datenow = sdf.format(dt);
 
-Date dt = new java.util.Date();
-
-java.text.SimpleDateFormat sdf = 
-new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-String datenow = sdf.format(dt);
-
-%>
-												<div class="date"><% out.println(datenow); %></div>
+													ArrayList<GetRoomMateFeed> newsfeed = new ArrayList<>();
+													ArrayList<GetRoomMateFeed> comment = new ArrayList<>();
+													newsfeed = (ArrayList<GetRoomMateFeed>) session
+															.getAttribute("roommatefeed");
+												%>
+												<div class="date">
+													<%
+														out.println(datenow);
+													%>
+												</div>
 											</div>
 										</div>
 										<div class="media-body">
@@ -136,7 +147,7 @@ String datenow = sdf.format(dt);
 												<div class="row">
 													<div class="col-md-10 col-lg-8">
 														<div class="panel panel-default">
-															<form action="Roommate" method="get">
+															<form action="PostRoomMateFeed" method="post">
 																<div class="panel-heading panel-heading-gray ">
 
 																	Please fill out the form below:</div>
@@ -147,14 +158,15 @@ String datenow = sdf.format(dt);
 																	</label> <label class="radio-inline"><input
 																		type="radio" name="optradio" value="House">House</label>
 																	<br> <br>
-																	<textarea name="desc" id="description"
+																	<textarea name="description" id="description"
 																		class="form-control" rows="3"
 																		placeholder="Description..."></textarea>
 																	<br> <label for="address">Address:</label> <input
 																		type="text" class="form-control" id="add"
 																		name="address" /> <br> <label for="address">Amount/Rent:</label>
 																	<input type="text" class="form-control" id="amt"
-																		name="rent" />
+																		name="amount" />
+																		<input type="hidden" name="pid" value="0">
 																</div>
 																<div class="panel-footer share-buttons">
 																	<input type="submit"
@@ -176,43 +188,33 @@ String datenow = sdf.format(dt);
 
 
 									<!-- Post Starts-->
-
 									<%
-										Map<String, ArrayList> p = (Map) request.getAttribute("m");
-																																													ArrayList nindex = p.get("nindex");
-																																													ArrayList pindex = p.get("pindex");
-																																													ArrayList content = p.get("content");
-																																													ArrayList pid = p.get("pid");
-																																													ArrayList id = p.get("id");
-																																													ArrayList email = p.get("email");
-																																													ArrayList postdate = p.get("postdate");
-																																													String mainpost ="";
-																																													String primaryid="";
-																																												
-									%>
-
-									<%
-									AuthDAO ad = new AuthDAO();
-									
-										for (int counter = 0; counter < pindex.size(); counter++) {
-																																																																												        if (nindex.contains(pindex.get(counter))) {																																	        	primaryid = (String) (id.get((int) pindex.get(counter)));																														mainpost = (String) (content.get((int) pindex.get(counter)));
+										comment = newsfeed;
+										for (int i = 0; i < newsfeed.size(); i++) {
+											if ((newsfeed.get(i).getParentID()).equals("0")) {
 									%>
 									<!-- Post Starts-->
 
 									<li class="media media-clearfix-xs">
 										<div class="media-left">
 											<div class="user-wrapper">
-												<img src="CSS/images/<%=ad.getPhoto((String) email.get((int) pindex.get(counter)))%>" alt="people"
-													class="img-circle" width="80" height="80"/>
+												<img
+													src="CSS/images/<%=ad.getPhoto(newsfeed.get(i).getEmail())%>"
+													alt="people" class="img-circle" width="80" height="80" />
 
 												<div>
-													<a href="#"> <%
- 	out.println((String) email.get((int) pindex.get(counter)));%>
+													<a
+														href="viewprofile.jsp?Email=<%=newsfeed.get(i).getEmail()%>">
+														<%
+															out.println((String) newsfeed.get(i).getEmail());
+														%>
 													</a>
 												</div>
-												<div class="date"><%
- 	out.println((String) postdate.get((int) pindex.get(counter)));
- %></div>
+												<div class="date">
+													<%
+														out.write(newsfeed.get(i).getTime());
+													%>
+												</div>
 											</div>
 										</div>
 										<div class="media-body">
@@ -224,20 +226,23 @@ String datenow = sdf.format(dt);
 
 
 															<%
-																out.println("Searching for: "+mainpost.split("@")[0]);
+																out.println("Searching for: "
+																				+ newsfeed.get(i).getRoommatetype());
 															%>
 
 															<br>
 
 															<%
-																out.println("Description: "+mainpost.split("@")[1]);
+																out.println("Description: "
+																				+ newsfeed.get(i).getDescription());
 															%><br>
 															<%
-																out.println("Address: "+mainpost.split("@")[2]);
+															if(!(newsfeed.get(i).getAddress()).equals("null"))
+																out.println("Address: " + newsfeed.get(i).getAddress());
 															%><br>
 															<%
-																if(mainpost.split("@").length == 4) 
-																												 out.println("Rent: "+mainpost.split("@")[3]);
+															if(!(newsfeed.get(i).getAmount()).equals("null"))
+																out.println("Amount: " + newsfeed.get(i).getAmount());
 															%><br> <br>
 														<div id="a"></div>
 														<div id="d"></div>
@@ -249,27 +254,23 @@ String datenow = sdf.format(dt);
 														<!-- New Comment-->
 														<li class="comment-form">
 															<div class="input-group">
-																<form action="Roommate" method="get">
-																	<input type="text" class="form-control" name="replynew" />
-																	<input name="replyposts" type="hidden"
-																		value="<%=primaryid%>"> <span
+																<form action="PostRoomMateFeed" method="post">
+																	<input type="text" class="form-control" name="description" />
+																	<input name="pid" type="hidden"
+																		value="<%=newsfeed.get(i).getID()%>"> <span
 																		class="input-group-btn"> <input type="submit"
 																		name="action" class="btn btn-primary" value="reply" />
 																	</span>
 																</form>
 															</div>
 														</li>
-														<%
-															}else{primaryid="abcdefghijklmnopqrstuvwxyzqwerty";}
-														%>
 														<!-- New Comment-->
 
 														<%
-															for (int c = 0; c < pid.size(); c++) {
-																																																																																	if(pid.get(c).equals(primaryid)){
+															for (int j = 0; j < comment.size(); j++) {
+																		if (newsfeed.get(j).getParentID()
+																				.equals(newsfeed.get(i).getID())) {
 														%>
-
-
 														<li class="media">
 
 															<div class="media-body">
@@ -279,17 +280,25 @@ String datenow = sdf.format(dt);
 																	</a>
 
 																</div>
-																<a href="" class="comment-author pull-left"><% out.println(session.getAttribute("email")); %>></a>
-																<span> <%
- 	out.println(content.get(c));
+																<a
+																	href="viewprofile.jsp?Email=<%=newsfeed.get(j).getEmail()%>"
+																	class="comment-author pull-left"> <%
+ 	out.write(newsfeed.get(j).getEmail());
+ %>
+																</a> <span> <%
+ 	out.write(newsfeed.get(j).getDescription());
  %>
 																</span>
-																<div class="comment-date">18 Feb</div>
+																<div class="comment-date">
+																	<%
+																		out.write(newsfeed.get(j).getTime());
+																	%>
+																</div>
 															</div>
 														</li>
 														<%
 															}
-																																																																																  }
+																	}
 														%>
 													</ul>
 
@@ -298,8 +307,8 @@ String datenow = sdf.format(dt);
 											</div>
 										</div>
 									</li>
-
 									<%
+										}
 										}
 									%>
 
@@ -323,34 +332,6 @@ String datenow = sdf.format(dt);
 	<!-- Footer -->
 	<jsp:include page="include/footer.html" />
 
-	<script type="text/javascript">
-		function displayOutput() {
-			var desc = document.getElementById("description").value;
-			var add = document.getElementById("add").value;
-			var amt = document.getElementById("amt").value;
-			var radios = document.getElementsByName("optradio");
-			for (var i = 0, length = radios.length; i < length; i++) {
-				if (radios[i].checked) {
-
-					var opt = radios[i].value;
-
-					break;
-				}
-			}
-
-			if (opt.length == 0) {
-				alert("Please enter a valid input");
-				return;
-			}
-			document.getElementById("o").innerHTML = "Looking for a " + opt;
-			document.getElementById("a").innerHTML = "Address: " + add;
-			document.getElementById("d").innerHTML = "Description: " + desc;
-			if (amt.length == 0) {
-			} else {
-				document.getElementById("r").innerHTML = "Rent: " + amt;
-			}
-		}
-	</script>
 </body>
 
 </html>

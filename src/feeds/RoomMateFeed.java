@@ -1,6 +1,7 @@
-package dataBase;
+package feeds;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -8,17 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dataBase.AuthDAO;
+
 /**
- * Servlet implementation class FfindProfile
+ * Servlet implementation class RoomMateFeed
  */
-@WebServlet("/FindProfile")
-public class FindProfile extends HttpServlet {
+@WebServlet("/RoomMateFeed")
+public class RoomMateFeed extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FindProfile() {
+    public RoomMateFeed() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,16 +31,7 @@ public class FindProfile extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		String type = (String) session.getAttribute("type");
-		
-		System.out.println("Here type is "+type);
-		
-		if(type.equals("1"))
-			response.sendRedirect("profile.jsp");
-		else
-			response.sendRedirect("fprofile.jsp");
-		
+		doPost(request, response);
 	}
 
 	/**
@@ -45,8 +39,10 @@ public class FindProfile extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-		
+		HttpSession session = request.getSession();
+		AuthDAO ad = new AuthDAO();
+		session.setAttribute("roommatefeed", ad.getAllRoomMateFeeds());
+		response.sendRedirect("roommate.jsp");
 	}
 
 }
