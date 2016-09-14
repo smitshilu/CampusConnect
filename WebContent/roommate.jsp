@@ -2,6 +2,11 @@
 <%@page import="dataBase.AuthDAO"%>
 <%@page import="model.GetRoomMateFeed"%>
 
+<%
+if (session.isNew())
+	response.sendRedirect("index.jsp");
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 

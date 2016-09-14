@@ -8,8 +8,9 @@
 <html lang="en">
 
 <%
-	if (session.getAttribute("email").equals(null))
-		response.sendRedirect("index.jsp");
+session = request.getSession();
+if (session.isNew())
+	response.sendRedirect("index.jsp");
 %>
 
 <head>
@@ -52,6 +53,19 @@
 <link href="CSS/style.css" rel="stylesheet">
 <script src="scripts/grayscale.js"></script>
 <script src="scripts/scripts.js"></script>
+
+<script type="text/javascript">
+	function showAjax() {
+		var content = document.getElementById("showAjaxText").value;
+		doAjax("showAjaxId", "ajax.do?content=" + content);
+		document.getElementById("showAjaxId").style.display = "block";
+	}
+	function showClickText(obj) {
+		document.getElementById("showAjaxText").value = obj.innerHTML;
+		document.getElementById("showAjaxId").style.display = "none";
+	}
+</script>
+<script type="text/javascript" src="js/ajax.js"></script>
 
 <link href="CSS/style.css" rel="stylesheet" type="text/css">
 
@@ -192,8 +206,9 @@
 									<li class="media media-clearfix-xs">
 										<div class="media-left">
 											<div class="user-wrapper">
+											<% System.out.println(session.getAttribute("photolocation")); %>
 												<img
-													src="CSS/images/<%=ad.getPhoto(newsfeed.get(i).getEmail())%>"
+													src="<%= session.getAttribute("photolocation") %>"
 													alt="people" class="img-circle" width="80" height="80" />
 
 												<div>

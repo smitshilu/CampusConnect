@@ -4,8 +4,8 @@
 <%@ page import="dataBase.AuthDAO"%>
 
 <%
-	if ((session.getAttribute("email")) == null)
-		response.sendRedirect("index.jsp");
+if (session.isNew())
+	response.sendRedirect("index.jsp");
 
 String temp_email = (String) request.getParameter("Email");
 AuthDAO ad = new AuthDAO();

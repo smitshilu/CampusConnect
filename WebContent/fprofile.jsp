@@ -9,7 +9,7 @@
 <head>
 
 <%
-	if ((session.getAttribute("email")) == null)
+	if (session.isNew())
 		response.sendRedirect("index.jsp");
 
 String temp_email = (String) request.getParameter("Email");

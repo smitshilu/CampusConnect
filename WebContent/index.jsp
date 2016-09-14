@@ -1,7 +1,3 @@
-<%
-if (session.getAttribute("email") != null)
-	response.sendRedirect("newsfeed.jsp");
-%>
 
 <!DOCTYPE html>
 <html lang="en">

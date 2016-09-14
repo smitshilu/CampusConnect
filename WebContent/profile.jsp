@@ -3,8 +3,8 @@
 <%@ page import="java.io.*"%>
 
 <%
-	if ((session.getAttribute("email")) == null)
-		response.sendRedirect("index.jsp");
+if (session.isNew())
+	response.sendRedirect("index.jsp");
 %>
 
 <html lang="en-gb" class="no-js">

@@ -1,3 +1,8 @@
+<% 
+if(!session.isNew())
+	response.sendRedirect("NewsFeed");
+%>
+
 <html>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"

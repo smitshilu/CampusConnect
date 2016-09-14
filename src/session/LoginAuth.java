@@ -1,5 +1,6 @@
 package session;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -45,23 +46,24 @@ public class LoginAuth extends HttpServlet {
 		String password = request.getParameter("Password");
 
 		AuthDAO ad = new AuthDAO();
-		
+
 		if (ad.LoginAuth(email, password)) {
 			HttpSession session = request.getSession();
 			session.setAttribute("email", email);
 			session.setAttribute("type", ad.getType(email));
 			session.setAttribute("profile", ad.getStudentProfile(email));
-			System.out.println(ad.getPhoto(email));
-			session.setAttribute("photopath", "CSS/images/"+ad.getPhoto(email));
+			
+
+			File f = new File(email + ".JPG");
+			System.out.println("filepath "+f.getAbsolutePath());
+			session.setAttribute("photopath", f.getAbsolutePath());
 			response.sendRedirect("NewsFeed");
+		} else {
+			request.setAttribute("login_error",
+					"Username and Password not correct");
+			getServletContext().getRequestDispatcher("/login.jsp").forward(
+					request, response);
 		}
-		else {
-			request.setAttribute("login_error", "Username and Password not correct");
-			getServletContext().getRequestDispatcher("/login.jsp")
-					.forward(request, response);
-		}
-		
-		
 
 	}
 }

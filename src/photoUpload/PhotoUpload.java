@@ -62,23 +62,30 @@ public class PhotoUpload extends HttpServlet {
 								.getExtension(filename)).toUpperCase();
 						String name = session.getAttribute("email") + "."
 								+ fileextension;
-						String filepath = "E:\\" + File.separator
-								+ "\\Software Engineering" + File.separator
-								+ "\\CampusConnect" + File.separator
-								+ "\\WebContent" + File.separator + "\\CSS"
-								+ File.separator + "\\images" + File.separator
-								+ "\\" + name;
-						item.write(new File(filepath));
 
-						System.out.println(name);
-						
+						// String filepath = "WebContent\\CSS" + File.separator
+						// + "\\images"
+						// + File.separator + "\\" + name;
+
+						String filepath = new File(name).getAbsolutePath();
+						System.out.println(filepath);
+
+						File f = new File(filepath + "\\" + name);
+						item.write(f);
+
+						System.out.println(f.getAbsolutePath());
+
 						AuthDAO ad = new AuthDAO();
-						ad.insertPhoto((String) session.getAttribute("email"), name);
-						session.setAttribute("photo", "CSS/images/"+name);
-						
-						File fLocation = new File("CSS/images");
+						ad.insertPhoto((String) session.getAttribute("email"),
+								name);
+						session.setAttribute("photo", f.getAbsolutePath() + "/"
+								+ name);
+						session.setAttribute("photolocation",
+								f.getAbsolutePath() + "\\");
+
+						File fLocation = new File(f.getAbsolutePath());
 						fLocation.listFiles();
-						
+
 						response.sendRedirect("profile.jsp");
 
 					}

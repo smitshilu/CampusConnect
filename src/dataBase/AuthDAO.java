@@ -415,5 +415,83 @@ public class AuthDAO {
 		}
 		return "default.jpg";
 	}
+	
+	public ArrayList<StudentProfile> seachStudent(String search) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		ResultSet rs = null;
+
+		String query = "SELECT * FROM `student` where Fname LIKE '%" + search + "%' OR Lname LIKE '%" + search + "%'";
+
+		try {
+			rs = s.executeQuery(query);
+
+			ArrayList<StudentProfile> profile = new ArrayList<>();
+
+			while (rs.next()) {
+				String getemail = rs.getString("Email");
+				String getdob = rs.getString("Dob");
+				String getsex = rs.getString("Sex");
+				String getmajor = rs.getString("Major");
+				String getclassof = rs.getString("Classof");
+				String getinterest = rs.getString("Major");
+				String getfname = rs.getString("Fname");
+				String getlname = rs.getString("Lname");
+				StudentProfile studentProfile = new StudentProfile(getfname,
+						getlname, getemail, getdob, getsex, getmajor,
+						getclassof, getinterest);
+				profile.add(studentProfile);
+			}
+			return profile;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+
+	public ArrayList<FacultyProfile> searchFaculty(String search) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		ResultSet rs = null;
+
+		String query = "SELECT * FROM `faculty` where Ffname LIKE '%" + search + "%' OR Flname LIKE '%" + search + "%'";
+
+		try {
+			rs = s.executeQuery(query);
+
+			ArrayList<FacultyProfile> profile = new ArrayList<>();
+
+			while (rs.next()) {
+				String getFname = rs.getString("Ffname");
+				String getLname = rs.getString("Flname");
+				String getFemail = rs.getString("Femail");
+				String getDob = rs.getString("Fdob");
+				String getFsex = rs.getString("Fsex");
+				String getFdept = rs.getString("Fdept");
+				String getFcourse = rs.getString("Fcourse");
+				String getFrarea = rs.getString("Frarea");
+				String getFofhours = rs.getString("Fohours");
+				String getFofloc = rs.getString("Folocation");
+				
+				FacultyProfile facultyProfile = new FacultyProfile(getFname, getLname, getFemail, getDob, getFsex,
+						getFdept, getFcourse, getFrarea, getFofhours, getFofloc);
+				profile.add(facultyProfile);
+			}
+			return profile;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

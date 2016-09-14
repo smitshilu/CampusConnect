@@ -45,10 +45,10 @@ public class NewsFeed extends HttpServlet {
 		// TODO Auto-generated method stub
 
 		HttpSession session = request.getSession();
+
 		AuthDAO ad = new AuthDAO();
 		session.setAttribute("newsfeed", ad.getAllFeeds());
 		response.sendRedirect("newsfeed.jsp");
-
 	}
 
 }
